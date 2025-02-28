@@ -1,1 +1,48 @@
-<p>login works!</p>
+<div class="login-container">
+  <form [formGroup]="loginForm">
+    <h1>Log In</h1>
+    <div>
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          [type]="hide() ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="clickEvent($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+      @if(errorMessage){
+      <p class="error-message">{{ errorMessage }}</p>
+      }
+      <div class="forgot-password">
+        <a href="#" class="forgot-password">Forgot Password?</a>
+      </div>
+    </div>
+    <div class="divider">
+      <span>Or Log In With</span>
+    </div>
+
+    <div class="social-login-icons">
+      <mat-icon>facebook</mat-icon>
+      <mat-icon>email</mat-icon>
+    </div>
+
+    <div class="login-btn btn">
+      <button mat-raised-button extended (click)="OnLogIn()">Login</button>
+    </div>
+  </form>
+</div>

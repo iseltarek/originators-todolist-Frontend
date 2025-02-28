@@ -1,0 +1,45 @@
+section {
+  display: flex;
+  height: 100vh;
+  background: #f8f8f8;
+}
+
+/* Left Side */
+.left-section {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center everything */
+  justify-content: center;
+  gap: 3rem;
+  padding: 1rem;
+}
+
+/* Logo Styling */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 6rem; /* Increased size for better visibility */
+}
+
+.logo-container img {
+  width: 100%;
+  height: auto;
+}
+
+/* Right Side */
+.right-section {
+  width: 50%;
+  background: #d3d3d3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50% 0 0 50% / 100%;
+  overflow: hidden; /* Prevents image from breaking out */
+}
+
+.right-section img {
+  max-width: 80%;
+  height: auto;
+}
