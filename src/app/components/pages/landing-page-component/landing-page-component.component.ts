@@ -9,3 +9,12 @@ import { LoginComponent } from '../../Auth/login/login.component';
   styleUrl: './landing-page-component.component.css',
 })
 export class LandingPageComponentComponent {}
+
+
+// TODO: wrong components structrure 
+// components - 
+  // login
+  // signup
+// pages (I dont prefer this structure) to devided that into a components and pages 
+// make it all components 
+// landing page also to be home  

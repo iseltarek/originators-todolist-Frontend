@@ -4,6 +4,8 @@ import { LoginComponent } from './components/Auth/login/login.component';
 import { LandingPageComponentComponent } from './components/pages/landing-page-component/landing-page-component.component';
 
 export const routes: Routes = [
+  // CODE-REVIEW: 
+  // TODO: change landingpage to be /home
   { path: '', redirectTo: '/landingpage', pathMatch: 'full' },
   { path: 'landingpage', component: LandingPageComponentComponent },
   { path: 'signup', component: SignupComponent },
