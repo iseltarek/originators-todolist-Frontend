@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from '../../Auth/login/login.component';
+import { LoginComponent } from '../../auth/login/login.component';
 
 @Component({
   selector: 'app-landing-page-component',

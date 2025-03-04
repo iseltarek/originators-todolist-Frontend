@@ -9,12 +9,10 @@ import { AuthResponse } from '../model';
 })
 export class AuthService {
   baseUrl = 'http://localhost:3000';
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  private isAuthenticatedUserSubject = new BehaviorSubject<boolean>(false);
   constructor(public httpClient: HttpClient, public router: Router) {}
 
-  login(name: string, password: string): Observable<any> {
-    console.log(name);
-    console.log(password);
+  public login(name: string, password: string): Observable<AuthResponse> {
     return this.httpClient
       .post<AuthResponse>(`${this.baseUrl}/auth/login`, {
         name,
@@ -24,13 +22,14 @@ export class AuthService {
         map((response: AuthResponse) => {
           if (response) {
             localStorage.setItem('token', response.verificationToken);
+            this.isAuthenticatedUserSubject.next(true);
           }
           return response;
         })
       );
   }
 
-  signup(name: string, password: string): Observable<any> {
+  public signup(name: string, password: string): Observable<any> {
     return this.httpClient
       .post(`${this.baseUrl}/auth/register`, {
         name,
@@ -43,15 +42,17 @@ export class AuthService {
       );
   }
 
-  logout(): void {
+  public logout(): void {
     this.router.navigate(['/login']);
   }
 
-  isAuthenticated(): boolean {
-    return this.isAuthenticatedSubject.value;
+  public isUserAuthenticated(): boolean {
+    return (
+      this.isAuthenticatedUserSubject.value || !!localStorage.getItem('token')
+    );
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('authToken');
-  }
+  // private getUserToken(): string | null {
+  //   return localStorage.getItem('authToken');
+  // }
 }

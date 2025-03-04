@@ -18,7 +18,7 @@
         <button
           mat-icon-button
           matSuffix
-          (click)="clickEvent($event)"
+          (click)="togglePasswordVisibility($event)"
           [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide()"
         >
@@ -42,7 +42,7 @@
     </div>
 
     <div class="login-btn btn">
-      <button mat-raised-button extended (click)="OnLogIn()">Login</button>
+      <button mat-raised-button extended (click)="handleLogin()">Login</button>
     </div>
   </form>
 </div>
