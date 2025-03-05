@@ -1,1 +1,37 @@
-<p>home works!</p>
+<mat-sidenav-container class="home-container">
+  <mat-sidenav #sidenav mode="side" opened class="sidenav">
+    <app-side-nav />
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <header class="header">
+      <div class="header-actions">
+        <div class="search-bar">
+          <input matInput type="text" placeholder="Search" />
+        </div>
+        <div class="header-actions-right">
+          <span class="date">{{ today | date : "EEEE, MMM d, y" }}</span>
+          <mat-icon matBadge="•" matBadgeColor="warn" matBadgeSize="small"
+            >notifications</mat-icon
+          >
+          <button mat-icon-button>
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </div>
+      </div>
+      <h1>My Tasks</h1>
+    </header>
+
+    <section class="tasks">
+      <div class="task-header">
+        <span>Recent Tasks</span>
+        <button mat-raised-button color="primary">Create Task</button>
+      </div>
+
+      <div class="task-grid">
+        <!-- <app-task-card *ngFor="let task of tasks"></app-task-card> -->
+        tasks
+      </div>
+    </section>
+  </mat-sidenav-content>
+</mat-sidenav-container>

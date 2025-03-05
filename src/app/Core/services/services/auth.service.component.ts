@@ -9,6 +9,7 @@ import { AuthResponse } from '../model';
 })
 export class AuthService {
   baseUrl = 'http://localhost:3000';
+  TokenKey = 'token';
   private isAuthenticatedUserSubject = new BehaviorSubject<boolean>(false);
   constructor(public httpClient: HttpClient, public router: Router) {}
 
@@ -21,7 +22,7 @@ export class AuthService {
       .pipe(
         map((response: AuthResponse) => {
           if (response) {
-            localStorage.setItem('token', response.verificationToken);
+            localStorage.setItem(this.TokenKey, response.verificationToken);
             this.isAuthenticatedUserSubject.next(true);
           }
           return response;
@@ -43,16 +44,15 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.router.navigate(['/login']);
+    this.isAuthenticatedUserSubject.next(false);
+    localStorage.removeItem(this.TokenKey);
+    this.router.navigate(['/landingpage']);
   }
 
   public isUserAuthenticated(): boolean {
     return (
-      this.isAuthenticatedUserSubject.value || !!localStorage.getItem('token')
+      this.isAuthenticatedUserSubject.value ||
+      !!localStorage.getItem(this.TokenKey)
     );
   }
-
-  // private getUserToken(): string | null {
-  //   return localStorage.getItem('authToken');
-  // }
 }
