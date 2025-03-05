@@ -3,22 +3,21 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { AuthResponse } from '../model';
-import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = environment.apiUrl + '/auth';
+  baseUrl = 'http://localhost:3000' + '/auth';
   TokenKey = 'token';
   private isAuthenticatedUserSubject = new BehaviorSubject<boolean>(false);
   constructor(public httpClient: HttpClient, public router: Router) {}
 
-  public login(name: string, password: string): Observable<AuthResponse> {
+  public login(email: string, password: string): Observable<AuthResponse> {
     return this.httpClient
       .post<AuthResponse>(`${this.baseUrl}/login`, {
-        name,
         password,
+        email,
       })
       .pipe(
         map((response: AuthResponse) => {
@@ -56,4 +55,8 @@ export class AuthService {
       !!localStorage.getItem(this.TokenKey)
     );
   }
+  // public getUserName(): string {
+  //   const UserToken = localStorage.getItem(this.TokenKey);
+  //   return UserToken.name;
+  // }
 }

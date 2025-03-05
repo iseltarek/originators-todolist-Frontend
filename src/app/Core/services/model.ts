@@ -1,10 +1,13 @@
 export interface Note {
+  status: string;
+  tags: [];
+  description: string;
   _id: string;
   title: string;
   completed: boolean;
   createdAt: Date;
   updatedAt: Date;
-  version: number;
+  _v: number;
 }
 
 export interface AuthResponse {
@@ -13,4 +16,10 @@ export interface AuthResponse {
     id: string;
     name: string;
   };
+}
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
 }

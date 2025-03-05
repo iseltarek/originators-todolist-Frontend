@@ -15,7 +15,7 @@ export class LoginComponent {
   errorMessage = '';
   hide = signal(true);
   loginForm = new FormGroup({
-    name: new FormControl(''),
+    email: new FormControl(''),
     password: new FormControl(''),
   });
   constructor(
@@ -25,9 +25,10 @@ export class LoginComponent {
   ) {}
 
   handleLogin() {
+    console.log(this.loginForm.value.email);
     this.authService
       .login(
-        this.loginForm.value.name as string,
+        this.loginForm.value.email as string,
         this.loginForm.value.password as string
       )
       .subscribe({
