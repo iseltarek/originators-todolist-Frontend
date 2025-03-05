@@ -8,16 +8,16 @@ import { AuthResponse } from '../model';
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = 'http://localhost:3000';
+  baseUrl = 'http://localhost:3000' + '/auth';
   TokenKey = 'token';
   private isAuthenticatedUserSubject = new BehaviorSubject<boolean>(false);
   constructor(public httpClient: HttpClient, public router: Router) {}
 
-  public login(name: string, password: string): Observable<AuthResponse> {
+  public login(email: string, password: string): Observable<AuthResponse> {
     return this.httpClient
-      .post<AuthResponse>(`${this.baseUrl}/auth/login`, {
-        name,
+      .post<AuthResponse>(`${this.baseUrl}/login`, {
         password,
+        email,
       })
       .pipe(
         map((response: AuthResponse) => {
@@ -32,7 +32,7 @@ export class AuthService {
 
   public signup(name: string, password: string): Observable<any> {
     return this.httpClient
-      .post(`${this.baseUrl}/auth/register`, {
+      .post(`${this.baseUrl}/register`, {
         name,
         password,
       })
@@ -55,4 +55,8 @@ export class AuthService {
       !!localStorage.getItem(this.TokenKey)
     );
   }
+  // public getUserName(): string {
+  //   const UserToken = localStorage.getItem(this.TokenKey);
+  //   return UserToken.name;
+  // }
 }

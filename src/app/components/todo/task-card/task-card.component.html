@@ -1,0 +1,55 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ Task.title }}</mat-card-title>
+    <mat-card-subtitle>{{ Task.status }}</mat-card-subtitle>
+    <div class="menu">
+      <div class="share">
+        <button class="share">
+          <mat-icon>share</mat-icon>
+        </button>
+      </div>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <span>In progress</span>
+        </button>
+        <button mat-menu-item>
+          <span>Done</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="content">
+      <p>{{ Task.description }}</p>
+    </div>
+  </mat-card-content>
+  <div class="progress">
+    <mat-progress-bar
+      mode="determinate"
+      [value]="GetProgressValue()"
+    ></mat-progress-bar>
+    <span>{{ GetProgressValue() + "%" }}</span>
+  </div>
+  <mat-card-footer class="card-footer">
+    <mat-chip-set aria-label="Chihuahua traits">
+      <mat-chip *ngFor="let tag of Task.tags">
+        {{ tag }}
+      </mat-chip>
+    </mat-chip-set>
+    <div class="control-btn">
+      <button class="control-btn" (click)="EditTask()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button class="control-btn" (click)="DeleteTask()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-card-footer>
+</mat-card>
