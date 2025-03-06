@@ -10,9 +10,13 @@ import { Note } from '../model';
 })
 export class TodoService {
   token = localStorage.getItem('token');
+  // TODO: still explicit url dont write explicit code make your code configuraable based on variables 
   baseUrl = 'http://localhost:3000' + '/todos';
+
+  // TODO: authService to be authenticationService, write simple 
   constructor(public httpClient: HttpClient, public authService: AuthService) {}
 
+  // TODO: TaskId to taskId/todoId
   getTaskById(TaskId: string): Observable<Note> {
     return this.httpClient.get<Note>(`${this.baseUrl}/${TaskId}`);
   }
@@ -21,11 +25,14 @@ export class TodoService {
       headers: this.getAuthHeader(),
     });
   }
+
+  // TODO: mistake to write a function with Capital Letter ``DeleteTask`` also dont use ``any`` use your own data type if not create a datatype Model/Interface
   DeleteTask(TaskId: string): Observable<any> {
     return this.httpClient.delete(`${this.baseUrl}/${TaskId}`, {
       headers: this.getAuthHeader(),
     });
   }
+  // TODO: mistake to write a function with Capital Letter ``AddTask``
   AddTask(Task: Note) {
     const body = {
       title: Task.title,
@@ -36,6 +43,7 @@ export class TodoService {
       headers: this.getAuthHeader(),
     });
   }
+
   getAuthHeader(): HttpHeaders {
     return new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
