@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { MaterialssModule } from '../../../Core/services/material.module';
+import { MaterialssModule } from '../../../core/services/material.module';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../../Core/services/services/auth.service.component';
+import { AuthService } from '../../../core/services/services/auth.service.component';
 import { Router } from '@angular/router';
-import { AuthGuard } from '../../../Core/services/auth.guard';
+import { AuthGuard } from '../../../core/services/auth.guard';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +25,7 @@ export class LoginComponent {
   ) {}
 
   handleLogin() {
+    // TODO: remove the console
     console.log(this.loginForm.value.email);
     this.authService
       .login(
@@ -36,6 +37,7 @@ export class LoginComponent {
           this.router.navigate(['/home']);
         },
         error: (err) => {
+          // TODO: show a popup for error message
           console.log(err.message);
           this.errorMessage = err.error.message;
         },
@@ -47,3 +49,4 @@ export class LoginComponent {
     event.stopPropagation();
   }
 }
+

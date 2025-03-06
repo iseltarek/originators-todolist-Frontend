@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TodoService } from '../../../Core/services/services/todo.service';
-import { Note } from '../../../Core/services/model';
-import { AuthService } from '../../../Core/services/services/auth.service.component';
+import { TodoService } from '../../../core/services/services/todo.service';
+import { Note } from '../../../core/services/model';
+import { AuthService } from '../../../core/services/services/auth.service.component';
 import { TaskCardComponent } from '../task-card/task-card.component';
 
 @Component({
@@ -13,6 +13,7 @@ import { TaskCardComponent } from '../task-card/task-card.component';
 export class AlltasksComponent implements OnInit {
   Tasks!: Note[];
   constructor(
+    // TODO: TodoService: todoService
     public TodoService: TodoService,
     public AuthService: AuthService
   ) {}

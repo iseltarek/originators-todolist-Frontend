@@ -8,9 +8,11 @@ import { AuthResponse } from '../model';
   providedIn: 'root',
 })
 export class AuthService {
+  // TODO: same issue
   baseUrl = 'http://localhost:3000' + '/auth';
   TokenKey = 'token';
   private isAuthenticatedUserSubject = new BehaviorSubject<boolean>(false);
+  
   constructor(public httpClient: HttpClient, public router: Router) {}
 
   public login(email: string, password: string): Observable<AuthResponse> {
