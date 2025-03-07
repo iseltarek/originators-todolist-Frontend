@@ -33,9 +33,9 @@
   <div class="progress">
     <mat-progress-bar
       mode="determinate"
-      [value]="GetProgressValue()"
+      [value]="getProgressValue()"
     ></mat-progress-bar>
-    <span>{{ GetProgressValue() + "%" }}</span>
+    <span>{{ getProgressValue() + "%" }}</span>
   </div>
   <mat-card-footer class="card-footer">
     <mat-chip-set aria-label="Chihuahua traits">
@@ -44,10 +44,10 @@
       </mat-chip>
     </mat-chip-set>
     <div class="control-btn">
-      <button class="control-btn" (click)="EditTask()">
+      <button class="control-btn" (click)="editTask()">
         <mat-icon>edit</mat-icon>
       </button>
-      <button class="control-btn" (click)="DeleteTask()">
+      <button class="control-btn" (click)="deleteTask()">
         <mat-icon>delete</mat-icon>
       </button>
     </div>

@@ -4,7 +4,7 @@ import { LoginComponent } from '../../auth/login/login.component';
 
 @Component({
   selector: 'app-landing-page-component',
-  imports: [RouterOutlet, LoginComponent],
+  imports: [LoginComponent],
   templateUrl: './landing-page-component.component.html',
   styleUrl: './landing-page-component.component.css',
 })

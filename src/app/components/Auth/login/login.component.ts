@@ -25,7 +25,6 @@ export class LoginComponent {
   ) {}
 
   handleLogin() {
-    console.log(this.loginForm.value.email);
     this.authService
       .login(
         this.loginForm.value.email as string,
@@ -36,7 +35,6 @@ export class LoginComponent {
           this.router.navigate(['/home']);
         },
         error: (err) => {
-          console.log(err.message);
           this.errorMessage = err.error.message;
         },
       });

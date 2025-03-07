@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MaterialssModule } from '../../../Core/services/material.module';
 import { MatMenuPanel } from '@angular/material/menu';
-import { Note } from '../../../Core/services/model';
 import { CommonModule } from '@angular/common';
 import { TodoService } from '../../../Core/services/services/todo.service';
+import { Note } from '../../../../models/note.model';
 
 @Component({
   selector: 'app-task-card',
@@ -15,16 +15,17 @@ export class TaskCardComponent {
   chipMenu: MatMenuPanel<any> | null | undefined;
   @Input() Task!: Note;
   @Output() DeleteNote = new EventEmitter<string>();
-  constructor(public TaskService: TodoService) {}
-  GetProgressValue(): unknown {
+  constructor(public todoService: TodoService) {}
+
+  getProgressValue(): unknown {
     return 100;
   }
 
-  EditTask() {
+  editTask() {
     throw new Error('Method not implemented.');
   }
-  DeleteTask() {
-    this.TaskService.DeleteTask(this.Task._id).subscribe({
+  deleteTask() {
+    this.todoService.deleteTask(this.Task._id).subscribe({
       next: () => {
         this.DeleteNote.emit(this.Task._id);
       },
