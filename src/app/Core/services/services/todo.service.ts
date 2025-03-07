@@ -3,30 +3,34 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service.component';
 import { Observable } from 'rxjs';
-import { Note } from '../model';
+import { Note } from '../../../../models/note.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
   token = localStorage.getItem('token');
-  baseUrl = 'http://localhost:3000' + '/todos';
-  constructor(public httpClient: HttpClient, public authService: AuthService) {}
+  baseUrl = environment.apiUrl + '/todos';
+  constructor(
+    public httpClient: HttpClient,
+    public authenticationService: AuthService
+  ) {}
 
-  getTaskById(TaskId: string): Observable<Note> {
-    return this.httpClient.get<Note>(`${this.baseUrl}/${TaskId}`);
+  getTaskById(taskId: string): Observable<Note> {
+    return this.httpClient.get<Note>(`${this.baseUrl}/${taskId}`);
   }
   getAllTasks(): Observable<Note[]> {
     return this.httpClient.get<Note[]>(`${this.baseUrl}/`, {
       headers: this.getAuthHeader(),
     });
   }
-  DeleteTask(TaskId: string): Observable<any> {
-    return this.httpClient.delete(`${this.baseUrl}/${TaskId}`, {
+  deleteTask(taskId: string): Observable<any> {
+    return this.httpClient.delete(`${this.baseUrl}/${taskId}`, {
       headers: this.getAuthHeader(),
     });
   }
-  AddTask(Task: Note) {
+
+  addTask(Task: Note) {
     const body = {
       title: Task.title,
       status: Task.status,

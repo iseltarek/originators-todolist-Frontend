@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../../../Core/services/services/todo.service';
-import { Note } from '../../../Core/services/model';
 import { AuthService } from '../../../Core/services/services/auth.service.component';
 import { TaskCardComponent } from '../task-card/task-card.component';
+import { Note } from '../../../../models/note.model';
 
 @Component({
   selector: 'app-alltasks',
@@ -12,17 +12,14 @@ import { TaskCardComponent } from '../task-card/task-card.component';
 })
 export class AlltasksComponent implements OnInit {
   Tasks!: Note[];
-  constructor(
-    public TodoService: TodoService,
-    public AuthService: AuthService
-  ) {}
+  constructor(public todoService: TodoService) {}
 
   ngOnInit() {
     this.loadTasks();
   }
 
   loadTasks() {
-    this.TodoService.getAllTasks().subscribe({
+    this.todoService.getAllTasks().subscribe({
       next: (res) => {
         this.Tasks = res;
       },

@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
-import { AuthResponse } from '../model';
+import { AuthResponse } from '../../../../models/authresponse.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = 'http://localhost:3000' + '/auth';
+  baseUrl = environment.apiUrl + '/auth';
   TokenKey = 'token';
   private isAuthenticatedUserSubject = new BehaviorSubject<boolean>(false);
   constructor(public httpClient: HttpClient, public router: Router) {}

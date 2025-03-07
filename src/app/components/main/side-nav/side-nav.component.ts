@@ -10,8 +10,8 @@ import { AuthService } from '../../../Core/services/services/auth.service.compon
   styleUrl: './side-nav.component.css',
 })
 export class SideNavComponent {
-  constructor(public authService: AuthService) {}
-  LogUserOut() {
-    this.authService.logout();
+  constructor(public authenticationService: AuthService) {}
+  logout() {
+    this.authenticationService.logout();
   }
 }

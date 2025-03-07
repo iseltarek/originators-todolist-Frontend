@@ -7,13 +7,7 @@ import { AlltasksComponent } from '../../todo/alltasks/alltasks.component';
 
 @Component({
   selector: 'app-home',
-  imports: [
-    MaterialssModule,
-    SideNavComponent,
-    DatePipe,
-    TaskCardComponent,
-    AlltasksComponent,
-  ],
+  imports: [MaterialssModule, SideNavComponent, DatePipe, AlltasksComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
