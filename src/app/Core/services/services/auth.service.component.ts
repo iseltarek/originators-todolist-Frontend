@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
-import { AuthResponse } from '../../../../models/authresponse.model';
+import { AuthResponse } from '../../../shared/models/authresponse.model';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({

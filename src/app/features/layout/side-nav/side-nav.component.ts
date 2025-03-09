@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MaterialssModule } from '../../../Core/services/material.module';
+import { MaterialssModule } from '../../../shared/material.module';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../Core/services/services/auth.service.component';
 
