@@ -24,7 +24,7 @@ export class TodoService {
       headers: this.getAuthHeader(),
     });
   }
-  deleteTask(taskId: string): Observable<any> {
+  deleteTask(taskId: number): Observable<any> {
     return this.httpClient.delete(`${this.baseUrl}/${taskId}`, {
       headers: this.getAuthHeader(),
     });

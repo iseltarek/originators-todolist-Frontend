@@ -15,7 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class TaskCardComponent implements OnInit {
   chipMenu: MatMenuPanel<any> | null | undefined;
   @Input() Task!: Note;
-  @Output() DeleteNote = new EventEmitter<string>();
+  @Output() DeleteNote = new EventEmitter<number>();
   constructor(public todoService: TodoService) {}
 
   ngOnInit() {
@@ -33,9 +33,9 @@ export class TaskCardComponent implements OnInit {
   }
 
   deleteTask() {
-    this.todoService.deleteTask(this.Task._id).subscribe({
+    this.todoService.deleteTask(this.Task.customId).subscribe({
       next: () => {
-        this.DeleteNote.emit(this.Task._id);
+        this.DeleteNote.emit(this.Task.customId);
       },
     });
   }

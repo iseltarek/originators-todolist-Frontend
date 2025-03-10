@@ -1,6 +1,6 @@
 <div class="grid-container">
   <ul class="tasks-grid">
-    @for (task of Tasks; track task._id) {
+    @for (task of Tasks; track task.customId) {
     <li class="task-item">
       <app-task-card [Task]="task" (DeleteNote)="DeleteNote($event)" />
     </li>
