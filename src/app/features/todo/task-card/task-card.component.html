@@ -16,11 +16,14 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="changeStatus('in-progress')">
           <span>In progress</span>
         </button>
-        <button mat-menu-item>
-          <span>Done</span>
+        <button mat-menu-item (click)="changeStatus('Completed')">
+          <span>Completed</span>
+        </button>
+        <button mat-menu-item (click)="changeStatus('todo')">
+          <span>Todo</span>
         </button>
       </mat-menu>
     </div>

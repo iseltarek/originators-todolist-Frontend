@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../../../Core/services/services/todo.service';
-import { AuthService } from '../../../Core/services/services/auth.service.component';
 import { TaskCardComponent } from '../task-card/task-card.component';
-import { Note } from '../../../../models/note.model';
+import { Note } from '../../../shared/models/note.model';
 
 @Component({
   selector: 'app-alltasks',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MaterialssModule } from '../../../Core/services/material.module';
+import { MaterialssModule } from '../../../shared/material.module';
 
 @Component({
   selector: 'app-signup',

@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { MaterialssModule } from '../../../Core/services/material.module';
+import { MaterialssModule } from '../../../shared/material.module';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../../Core/services/services/auth.service.component';
 import { Router } from '@angular/router';
-import { AuthGuard } from '../../../Core/services/auth.guard';
+import { AuthGuard } from '../../../Core/services/gurds/auth.guard';
 
 @Component({
   selector: 'app-login',

@@ -20,12 +20,16 @@
         </div>
       </div>
       <!-- <h1>{{ user.name + "Tasks" }}</h1> -->
+      <h1>My Tasks</h1>
     </header>
 
     <section class="tasks">
       <div class="task-header">
         <span>Recent Tasks</span>
-        <button mat-raised-button color="primary">Create Task</button>
+        <button mat-button class="create-task-btn" (click)="crateTask()">
+          <mat-icon>add_circle</mat-icon>
+          Create Task
+        </button>
       </div>
 
       <div class="task-grid">
@@ -34,3 +38,7 @@
     </section>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<app-create-task
+  *ngIf="isModalOpen"
+  (close)="closeTaskModal()"
+></app-create-task>

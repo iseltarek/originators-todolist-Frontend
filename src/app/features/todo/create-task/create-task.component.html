@@ -1,0 +1,42 @@
+<!-- task-form.component.html -->
+<form [formGroup]="taskForm">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Create New Task</mat-card-title>
+      <div class="date">
+        <input [matDatepicker]="picker" formControlName="date" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+    </mat-card-header>
+    <img
+      class="image"
+      src="https://s3-alpha-sig.figma.com/img/2107/44f0/a0cbce5cefd93c20a873290a079d9dee?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=SYLoSBwM7hjNeSTGN0kyXjH668uZYlsBWBpKJmDv8tbnviiv-J-5KpvUhDf~pfVGws8ImLOV-9H~NCycsH~Z0M95nNmSmlDWxoWz8BWzIbphFwoqj2Epo3yXrIga8Rhhxqd-iIDTzstODcpe-1owckPS6jzemwr2wTSBtClQSonjsIKZEn3xFHjWAnp8ksPWLA7uJs9zxd~aWXivtMeK2bSNfW5IxdAEmqGRa56ZW0qAfos-V2GgkjeXZgjozi1mrpPWVh6vEKgr7LiaoR8wy7cGzih3YSbQHoZvNDNSXVWd1L5X-ZCjmh3EshT7TOKOoq9t5p-7C6iHt1sqRBh~tg__"
+      alt="image"
+    />
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Task Title</mat-label>
+        <input matInput formControlName="title" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Mentioned</mat-label>
+        <input matInput />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Tags</mat-label>
+        <input matInput />
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-footer>
+      <button (click)="createTask()">Add Task</button>
+    </mat-card-footer>
+  </mat-card>
+</form>

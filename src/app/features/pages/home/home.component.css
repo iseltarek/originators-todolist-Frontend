@@ -65,3 +65,23 @@
 h1 {
   font-size: 40px;
 }
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem;
+  font-size: 1rem;
+}
+.create-task-btn {
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  padding: 5px 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.create-task-btn mat-icon {
+  color: black;
+}
