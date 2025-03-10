@@ -24,7 +24,7 @@ export class AlltasksComponent implements OnInit {
       },
     });
   }
-  DeleteNote(TaskId: string) {
-    this.Tasks = this.Tasks.filter((task) => task._id !== TaskId);
+  DeleteNote(TaskId: number) {
+    this.Tasks = this.Tasks.filter((task) => task.customId !== TaskId);
   }
 }

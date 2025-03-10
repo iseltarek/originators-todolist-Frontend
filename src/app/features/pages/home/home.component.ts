@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { MaterialssModule } from '../../../shared/material.module';
 import { SideNavComponent } from '../../layout/side-nav/side-nav.component';
 import { CommonModule, DatePipe } from '@angular/common';
-import { AlltasksComponent } from '../../todo/alltasks/alltasks.component';
 import { CreateTaskComponent } from '../../todo/create-task/create-task.component';
 import { ModalService } from '../../../shared/modal.service';
+import { MaterialssModule } from '../../../shared/material.module';
+import { AlltasksComponent } from '../../todo/alltasks/alltasks.component';
 
 @Component({
   selector: 'app-home',
   imports: [
-    MaterialssModule,
-    SideNavComponent,
-    DatePipe,
-    AlltasksComponent,
     CreateTaskComponent,
     CommonModule,
+    MaterialssModule,
+    AlltasksComponent,
+    SideNavComponent,
+    DatePipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
