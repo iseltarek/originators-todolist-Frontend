@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { SideNavComponent } from '../../layout/side-nav/side-nav.component';
 import { CommonModule, DatePipe } from '@angular/common';
 import { CreateTaskComponent } from '../../todo/create-task/create-task.component';
@@ -22,6 +28,7 @@ import { AlltasksComponent } from '../../todo/alltasks/alltasks.component';
 export class HomeComponent implements OnInit {
   today: Date = new Date();
   isModalOpen = false;
+  @ViewChild('createTaskModal', { static: false }) createTaskModal!: ElementRef;
   constructor(public modalService: ModalService) {}
 
   ngOnInit() {
@@ -36,5 +43,15 @@ export class HomeComponent implements OnInit {
 
   closeTaskModal() {
     this.modalService.closeModal();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (this.isModalOpen && this.createTaskModal) {
+      const modalElement = this.createTaskModal.nativeElement;
+      if (!modalElement.contains(event.target as Node)) {
+        this.closeTaskModal();
+      }
+    }
   }
 }
