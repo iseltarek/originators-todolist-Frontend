@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TodoService } from '../../../Core/services/services/todo.service';
 import { Note } from '../../../shared/models/note.model';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TodoStateService } from '../../../Core/services/services/todo.state.service';
 
 @Component({
   selector: 'app-task-card',
@@ -16,7 +17,10 @@ export class TaskCardComponent implements OnInit {
   chipMenu: MatMenuPanel<any> | null | undefined;
   @Input() Task!: Note;
   @Output() DeleteNote = new EventEmitter<number>();
-  constructor(public todoService: TodoService) {}
+  constructor(
+    public todoService: TodoService,
+    public todoStateService: TodoStateService
+  ) {}
 
   ngOnInit() {
     this.getProgressValue();
@@ -35,7 +39,7 @@ export class TaskCardComponent implements OnInit {
   deleteTask() {
     this.todoService.deleteTask(this.Task.customId).subscribe({
       next: () => {
-        this.DeleteNote.emit(this.Task.customId);
+        this.todoStateService.deleteTask(this.Task.customId);
       },
     });
   }

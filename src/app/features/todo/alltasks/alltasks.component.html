@@ -1,9 +1,7 @@
 <div class="grid-container">
   <ul class="tasks-grid">
-    @for (task of Tasks; track task.customId) {
-    <li class="task-item">
-      <app-task-card [Task]="task" (DeleteNote)="DeleteNote($event)" />
+    <li class="task-item" *ngFor="let task of tasks$ | async">
+      <app-task-card [Task]="task" />
     </li>
-    }
   </ul>
 </div>
