@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, input, Output } from '@angular/core';
 import { MaterialssModule } from '../../../shared/material.module';
 import {
   FormControl,
@@ -9,15 +9,17 @@ import {
 import { Note } from '../../../shared/models/note.model';
 import { TodoService } from '../../../Core/services/services/todo.service';
 import { TodoStateService } from '../../../Core/services/services/todo.state.service';
+import { TaskTagsComponent } from '../task-tags/task-tags.component';
 
 @Component({
   selector: 'app-create-task',
-  imports: [MaterialssModule, ReactiveFormsModule],
+  imports: [MaterialssModule, ReactiveFormsModule, TaskTagsComponent],
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.css',
 })
 export class CreateTaskComponent {
   errorMessage = '';
+  tags: string[] = [];
   @Output() closeEvent = new EventEmitter<void>();
   taskForm = new FormGroup({
     title: new FormControl<string>('', [
@@ -42,7 +44,7 @@ export class CreateTaskComponent {
       createdAt: (this.taskForm.get('date')?.value as Date) || new Date(),
       updatedAt: null,
       dueDate: null,
-      tags: [],
+      tags: this.tags,
       customId: 0,
     };
 
@@ -56,5 +58,9 @@ export class CreateTaskComponent {
         this.errorMessage = err.error.message;
       },
     });
+  }
+  updateTags(tags: string[] | Event) {
+    if (tags instanceof Event) return;
+    this.tags = [...tags];
   }
 }

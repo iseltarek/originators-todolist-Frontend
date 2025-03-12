@@ -4,7 +4,6 @@ import { MatMenuPanel } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { TodoService } from '../../../Core/services/services/todo.service';
 import { Note } from '../../../shared/models/note.model';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TodoStateService } from '../../../Core/services/services/todo.state.service';
 
 @Component({
@@ -45,6 +44,10 @@ export class TaskCardComponent implements OnInit {
   }
 
   editTask() {
-    throw new Error('Method not implemented.');
+    if (this.Task.tags)
+      for (const tag of this.Task.tags) {
+        console.log(tag);
+      }
+    console.log('no tage');
   }
 }

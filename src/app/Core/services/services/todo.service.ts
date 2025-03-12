@@ -35,6 +35,7 @@ export class TodoService {
       title: Task.title,
       status: Task.status,
       description: Task.description,
+      tags: Task.tags,
     };
     return this.httpClient.post<Note>(`${this.baseUrl}/`, body, {
       headers: this.getAuthHeader(),

@@ -48,7 +48,7 @@
 
       <div class="item">
         <label>tags:</label>
-        <input formControlName="title" />
+        <app-task-tags [tags]="tags" (tagsUpdated)="updateTags($event)" />
       </div>
 
       @if(errorMessage){
