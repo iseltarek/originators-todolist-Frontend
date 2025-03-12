@@ -4,13 +4,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service.component';
 import { Observable } from 'rxjs';
 import { Note } from '../../../shared/models/note.model';
+import { STORAGE_KEYS } from '../../../shared/storage-keys';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
-  token = localStorage.getItem('token');
   baseUrl = environment.apiUrl + '/todos';
+  TOKEN_KEY = STORAGE_KEYS.TOKEN_KEY;
+  token = localStorage.getItem(this.TOKEN_KEY);
   constructor(
     public httpClient: HttpClient,
     public authenticationService: AuthService
