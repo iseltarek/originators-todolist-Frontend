@@ -3,12 +3,18 @@ import { SignupComponent } from './features/components/signup/signup.component';
 import { LoginComponent } from './features/components/login/login.component';
 import { HomeComponent } from './features/pages/home/home.component';
 import { AuthGuard } from './Core/services/gurds/auth.guard';
-import { LandingPageComponentComponent } from './features/pages/landing-page-component/landing-page-component.component';
+import { LandingPageComponent } from './features/pages/landing-page/landing-page.component';
 
 export const routes: Routes = [
-  { path: 'landingpage', component: LandingPageComponentComponent },
+  {
+    path: 'landingpage',
+    component: LandingPageComponent,
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent },
+      { path: 'signup', component: SignupComponent },
+    ],
+  },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'signup', component: SignupComponent },
-  { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '/landingpage' },
 ];
