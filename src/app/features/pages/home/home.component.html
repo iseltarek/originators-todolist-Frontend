@@ -40,5 +40,5 @@
 </mat-sidenav-container>
 <app-create-task
   *ngIf="isModalOpen"
-  (close)="closeTaskModal()"
+  (closeEvent)="closeTaskModal()"
 ></app-create-task>

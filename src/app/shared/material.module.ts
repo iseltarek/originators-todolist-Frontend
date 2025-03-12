@@ -18,7 +18,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 const materialcomponent = [
+  MatSelectModule,
   MatDatepickerModule,
   MatChipsModule,
   MatButtonModule,

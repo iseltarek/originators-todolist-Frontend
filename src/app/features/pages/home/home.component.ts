@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
   crateTask() {
     this.modalService.openModal();
   }
+
   closeTaskModal() {
     this.modalService.closeModal();
   }

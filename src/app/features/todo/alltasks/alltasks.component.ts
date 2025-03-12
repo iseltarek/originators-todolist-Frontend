@@ -2,29 +2,63 @@ import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../../../Core/services/services/todo.service';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { Note } from '../../../shared/models/note.model';
+import { TodoStateService } from '../../../Core/services/services/todo.state.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-alltasks',
-  imports: [TaskCardComponent],
+  imports: [TaskCardComponent, CommonModule],
   templateUrl: './alltasks.component.html',
   styleUrl: './alltasks.component.css',
 })
 export class AlltasksComponent implements OnInit {
-  Tasks!: Note[];
-  constructor(public todoService: TodoService) {}
+  private tasksSubject = new BehaviorSubject<Note[]>([]);
+  tasks$ = this.tasksSubject.asObservable();
+  taskAddedSubscription: Subscription | undefined;
+  taskDeletedSubscription: Subscription | undefined;
+  constructor(
+    public todoService: TodoService,
+    public todoStateService: TodoStateService
+  ) {}
 
   ngOnInit() {
+    this.addTask();
+    this.deleteNote();
     this.loadTasks();
   }
 
   loadTasks() {
     this.todoService.getAllTasks().subscribe({
       next: (res) => {
-        this.Tasks = res;
+        this.tasksSubject.next(res);
       },
     });
   }
-  DeleteNote(TaskId: number) {
-    this.Tasks = this.Tasks.filter((task) => task.customId !== TaskId);
+
+  deleteNote() {
+    this.taskDeletedSubscription = this.todoStateService.taskDeleted$.subscribe(
+      (TaskId) => {
+        const updatedTasks = this.tasksSubject.value.filter(
+          (task) => task.customId !== TaskId
+        );
+        this.tasksSubject.next(updatedTasks);
+      }
+    );
+  }
+
+  addTask() {
+    this.taskAddedSubscription = this.todoStateService.taskAdded$.subscribe(
+      (task) => {
+        if (task) {
+          const updatedTasks = [...this.tasksSubject.value, task];
+          this.tasksSubject.next(updatedTasks);
+        }
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.taskAddedSubscription!.unsubscribe();
   }
 }

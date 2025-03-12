@@ -1,8 +1,14 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MaterialssModule } from '../../../shared/material.module';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Note } from '../../../shared/models/note.model';
 import { TodoService } from '../../../Core/services/services/todo.service';
+import { TodoStateService } from '../../../Core/services/services/todo.state.service';
 
 @Component({
   selector: 'app-create-task',
@@ -11,25 +17,43 @@ import { TodoService } from '../../../Core/services/services/todo.service';
   styleUrl: './create-task.component.css',
 })
 export class CreateTaskComponent {
+  errorMessage = '';
   @Output() closeEvent = new EventEmitter<void>();
-  @Output() NotetoAddOutput = new EventEmitter<Note>();
   taskForm = new FormGroup({
-    title: new FormControl(''),
-    description: new FormControl(''),
-    date: new FormControl(''),
+    title: new FormControl<string>('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    description: new FormControl<string>(''),
+    date: new FormControl<Date | null>(null),
+    status: new FormControl<string>(''),
   });
-  task!: Note;
-  constructor(public todoService: TodoService) {}
+
+  constructor(
+    public todoService: TodoService,
+    public todoStateService: TodoStateService
+  ) {}
 
   createTask() {
-    this.task.title = this.taskForm.value.title as string;
-    this.task.description = this.taskForm.value.description as string;
-    this.task.status = 'todo';
-    this.todoService.addTask(this.task).subscribe({
-      next: () => {
-        this.taskForm.reset();
-        this.NotetoAddOutput.emit(this.task);
+    const newTask: Note = {
+      title: this.taskForm.get('title')?.value || '',
+      description: this.taskForm.get('description')?.value || '',
+      status: this.taskForm.get('status')?.value || 'todo',
+      createdAt: (this.taskForm.get('date')?.value as Date) || new Date(),
+      updatedAt: null,
+      dueDate: null,
+      tags: [],
+      customId: 0,
+    };
+
+    this.todoService.addTask(newTask).subscribe({
+      next: (createdTask: Note) => {
         this.closeEvent.emit();
+        this.todoStateService.setTask(createdTask);
+        this.taskForm.reset();
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message;
       },
     });
   }
