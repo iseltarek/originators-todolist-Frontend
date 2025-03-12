@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { AuthResponse } from '../../../shared/models/authresponse.model';
 import { environment } from '../../../../environments/environment';
+import { User } from '../../../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,11 +32,12 @@ export class AuthService {
       );
   }
 
-  public signup(name: string, password: string): Observable<any> {
+  public signup(user: User): Observable<any> {
     return this.httpClient
       .post(`${this.baseUrl}/register`, {
-        name,
-        password,
+        name: user.name,
+        password: user.password,
+        email: user.email,
       })
       .pipe(
         catchError((error) => {

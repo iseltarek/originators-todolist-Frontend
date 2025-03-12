@@ -1,0 +1,82 @@
+<div class="auth-container">
+  <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+    <h1>{{ formType === "login" ? "Log In" : "Sign Up" }}</h1>
+
+    <div class="item">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="formType === 'signup'" class="item">
+      <mat-form-field>
+        <mat-label>User Name</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+    </div>
+
+    <div class="item">
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [type]="hide() ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="togglePasswordVisibility($event)"
+        >
+          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <div class="forgot-password" *ngIf="formType === 'login'">
+        <a href="#" class="forgot-password">Forgot Password?</a>
+      </div>
+    </div>
+
+    <div class="item" *ngIf="formType === 'signup'">
+      <mat-form-field>
+        <mat-label>Confirm Password</mat-label>
+        <input matInput formControlName="confirmPassword" type="password" />
+      </mat-form-field>
+    </div>
+
+    <div class="divider">
+      <span>Or {{ formType === "login" ? "Log In" : "Sign Up" }} With</span>
+    </div>
+
+    <div class="social-login-icons">
+      <mat-icon>facebook</mat-icon>
+      <mat-icon>email</mat-icon>
+    </div>
+
+    <div class="btn">
+      <button
+        class="btn"
+        mat-raised-button
+        extended
+        [disabled]="authForm.invalid"
+      >
+        {{ formType === "login" ? "Login" : "Sign Up" }}
+      </button>
+    </div>
+  </form>
+
+  <div class="switch-auth">
+    <span>
+      {{
+        formType === "login"
+          ? "Don't have an account?"
+          : "Already have an account?"
+      }}
+    </span>
+    <button
+      (click)="formType === 'login' ? navigateToSignup() : navigateToLogin()"
+    >
+      {{ formType === "login" ? "Sign Up" : "Login" }}
+    </button>
+  </div>
+</div>
