@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AuthService } from '../../../Core/services/services/auth.service.component';
 import { Router, RouterLink } from '@angular/router';
 import { AuthGuard } from '../../../Core/services/gurds/auth.guard';
@@ -12,7 +12,7 @@ import { User } from '../../../shared/models/user.model';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  errorMessage = '';
+  errorMessage = signal<string | null>(null);
 
   constructor(
     public authService: AuthService,
@@ -28,7 +28,7 @@ export class LoginComponent {
           this.router.navigate(['/home']);
         },
         error: (err) => {
-          this.errorMessage = err.error.message;
+          this.errorMessage.set(err.error.message);
         },
       });
   }

@@ -6,6 +6,7 @@
       <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" />
+        <mat-error>{{ getErrorMessage("email") }}</mat-error>
       </mat-form-field>
     </div>
 
@@ -31,6 +32,8 @@
         >
           <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
+
+        <mat-error>{{ getErrorMessage("password") }}</mat-error>
       </mat-form-field>
       <div class="forgot-password" *ngIf="formType === 'login'">
         <a href="#" class="forgot-password">Forgot Password?</a>
@@ -41,8 +44,15 @@
       <mat-form-field>
         <mat-label>Confirm Password</mat-label>
         <input matInput formControlName="confirmPassword" type="password" />
+        <mat-error>{{ getErrorMessage("confirmPassword") }}</mat-error>
       </mat-form-field>
     </div>
+
+    @if(errorMessage){
+    <mat-error>
+      {{ errorMessage }}
+    </mat-error>
+    }
 
     <div class="divider">
       <span>Or {{ formType === "login" ? "Log In" : "Sign Up" }} With</span>
@@ -54,12 +64,7 @@
     </div>
 
     <div class="btn">
-      <button
-        class="btn"
-        mat-raised-button
-        extended
-        [disabled]="authForm.invalid"
-      >
+      <button class="btn" mat-raised-button extended>
         {{ formType === "login" ? "Login" : "Sign Up" }}
       </button>
     </div>

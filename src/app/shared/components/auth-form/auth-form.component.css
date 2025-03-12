@@ -91,6 +91,10 @@ button {
 }
 .error-message {
   color: #ff4d4d;
-  font-size: 1rem !important;
+  font-size: 0.9rem !important;
   margin-top: 5px;
+}
+mat-error {
+  color: #ff4d4d;
+  font-size: 0.9rem !important;
 }

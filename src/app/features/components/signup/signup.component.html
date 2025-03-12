@@ -1,4 +1,5 @@
 <app-auth-form
   formType="signup"
   (formSubmit)="signup($event)"
+  [errorMessage]="errorMessage()"
 ></app-auth-form>
