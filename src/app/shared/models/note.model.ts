@@ -1,6 +1,6 @@
 export interface Note {
   status: string;
-  tags: [];
+  tags: string[] | null;
   description: string;
   customId: number;
   title: string;
