@@ -11,12 +11,11 @@
   justify-content: center;
   align-items: center;
   padding: 20px 0;
-  background-color: red;
 }
 
 .logo-container img {
   width: 100px;
-  height: auto;
+  height: 1rem;
 }
 
 mat-nav-list {

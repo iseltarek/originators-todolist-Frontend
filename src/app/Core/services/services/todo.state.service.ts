@@ -10,6 +10,8 @@ export class TodoStateService {
   taskDeleted$ = this.taskDeleted.asObservable();
   private taskAdded = new BehaviorSubject<Note | null>(null);
   taskAdded$ = this.taskAdded.asObservable();
+  taskToUpdate = new BehaviorSubject<Note | null>(null);
+  taskToUpdate$ = this.taskToUpdate.asObservable();
 
   setTask(task: Note | null) {
     this.taskAdded.next(task);
@@ -17,5 +19,9 @@ export class TodoStateService {
 
   deleteTask(taskId: number) {
     this.taskDeleted.next(taskId);
+  }
+
+  updateTask(task: Note) {
+    this.taskToUpdate.next(task);
   }
 }
