@@ -24,7 +24,7 @@ export class AuthService {
   readonly USER_DATA_KEY = STORAGE_KEYS.USER_DATA_KEY;
   private readonly SESSION_EXPIRY_KEY = STORAGE_KEYS.SESSION_EXPIRY_KEY;
   private readonly SESSION_DURATION = 60 * 60 * 1000;
-
+  Expired_TOKEN = false;
   private isAuthenticatedUserSubject = new BehaviorSubject<boolean>(false);
   constructor(public httpClient: HttpClient, public router: Router) {}
 
@@ -39,6 +39,12 @@ export class AuthService {
           if (user) {
             this.setUserSession(user);
           }
+        }),
+        catchError((err) => {
+          if (err?.error?.status === 401) {
+            this.Expired_TOKEN = true;
+          }
+          return throwError(() => err); 
         })
       );
   }
@@ -51,8 +57,8 @@ export class AuthService {
         email: user.email,
       })
       .pipe(
-        catchError((error) => {
-          return throwError(() => error);
+        catchError((err)=>{
+          return throwError(() => err); 
         })
       );
   }
@@ -77,7 +83,7 @@ export class AuthService {
       sessionStorage.setItem(this.USER_DATA_KEY, JSON.stringify(data));
       this.setSessionExpiry();
       this.isAuthenticatedUserSubject.next(true);
-
+      this.Expired_TOKEN=false;
       this.startSessionExpiryCheck();
     }
   }
@@ -94,6 +100,10 @@ export class AuthService {
       if (currentTime >= +expiryTime) {
         this.logout();
       }
+    }
+    if(this.Expired_TOKEN){
+      this.Expired_TOKEN=false;
+      this.logout();
     }
   }
 

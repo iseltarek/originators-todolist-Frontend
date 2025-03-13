@@ -20,18 +20,12 @@
     <div class="item">
       <mat-form-field>
         <mat-label>Password</mat-label>
-        <input
-          matInput
-          [type]="hide() ? 'password' : 'text'"
-          formControlName="password"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="togglePasswordVisibility($event)"
-        >
-          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
-        </button>
+        <input matInput formControlName="password" />
+        <!-- <button mat-icon-button matSuffix> -->
+        <!-- [type]="hide ? 'password' : 'text'" -->
+        <!-- (click)="togglePasswordVisibility($event)" -->
+        <!-- <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon> -->
+        <!-- </button> -->
 
         <mat-error>{{ getErrorMessage("password") }}</mat-error>
       </mat-form-field>
