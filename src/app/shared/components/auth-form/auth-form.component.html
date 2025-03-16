@@ -1,52 +1,72 @@
 <div class="auth-container">
-  <form [formGroup]="authForm" (ngSubmit)="submitForm()">
-    <h1>{{ formType === "login" ? "Log In" : "Sign Up" }}</h1>
-
-    <div class="item">
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" />
-        <mat-error>{{ getErrorMessage("email") }}</mat-error>
-      </mat-form-field>
+  <form
+    nz-form
+    [ngClass]="formType"
+    [formGroup]="authForm"
+    (ngSubmit)="submitForm()"
+  >
+    <div class="header">
+      <h2>{{ formType === "login" ? "Log In" : "Sign Up" }}</h2>
+      <h4>
+        {{
+          formType === "login"
+            ? "Welcome Back!"
+            : "Welcome To Originator Tracker"
+        }}
+      </h4>
     </div>
 
-    <div *ngIf="formType === 'signup'" class="item">
-      <mat-form-field>
-        <mat-label>User Name</mat-label>
-        <input matInput formControlName="name" />
-      </mat-form-field>
-    </div>
-
-    <div class="item">
-      <mat-form-field>
-        <mat-label>Password</mat-label>
+    <nz-form-item class="item">
+      <mat-label class="label">Email</mat-label>
+      <nz-input-group class="input" nzPrefixIcon="mail">
         <input
-          matInput
-          [type]="hide() ? 'password' : 'text'"
-          formControlName="password"
+          nz-input
+          type="text"
+          formControlName="email"
+          placeholder="Email"
         />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="togglePasswordVisibility($event)"
-        >
-          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
-        </button>
+      </nz-input-group>
+      <mat-error>{{ getErrorMessage("email") }}</mat-error>
+    </nz-form-item>
 
-        <mat-error>{{ getErrorMessage("password") }}</mat-error>
-      </mat-form-field>
-      <div class="forgot-password" *ngIf="formType === 'login'">
-        <a href="#" class="forgot-password">Forgot Password?</a>
-      </div>
-    </div>
+    <nz-form-item class="item" *ngIf="formType === 'signup'">
+      <mat-label class="label">User Name</mat-label>
+      <nz-input-group nzPrefixIcon="mail">
+        <input
+          nz-input
+          type="text"
+          formControlName="name"
+          placeholder="User name"
+        />
+      </nz-input-group>
+      <mat-error>{{ getErrorMessage("name") }}</mat-error>
+    </nz-form-item>
 
-    <div class="item" *ngIf="formType === 'signup'">
-      <mat-form-field>
-        <mat-label>Confirm Password</mat-label>
-        <input matInput formControlName="confirmPassword" type="password" />
-        <mat-error>{{ getErrorMessage("confirmPassword") }}</mat-error>
-      </mat-form-field>
-    </div>
+    <nz-form-item class="item">
+      <mat-label class="label">Password</mat-label>
+      <nz-input-group class="input" nzPrefixIcon="mail">
+        <input
+          nz-input
+          type="text"
+          formControlName="password"
+          placeholder="Password"
+        />
+      </nz-input-group>
+      <mat-error>{{ getErrorMessage("password") }}</mat-error>
+    </nz-form-item>
+
+    <nz-form-item class="item" *ngIf="formType === 'signup'">
+      <mat-label class="label">Confirm Password</mat-label>
+      <nz-input-group class="input" nzPrefixIcon="mail">
+        <input
+          nz-input
+          type="text"
+          formControlName="confirmPassword"
+          placeholder="confirm Password"
+        />
+      </nz-input-group>
+      <mat-error>{{ getErrorMessage("confirmPassword") }}</mat-error>
+    </nz-form-item>
 
     @if(errorMessage){
     <mat-error>
@@ -54,19 +74,38 @@
     </mat-error>
     }
 
-    <div class="divider">
-      <span>Or {{ formType === "login" ? "Log In" : "Sign Up" }} With</span>
-    </div>
-
-    <div class="social-login-icons">
-      <mat-icon>facebook</mat-icon>
-      <mat-icon>email</mat-icon>
+    <div nz-row class="login-form-margin" *ngIf="formType === 'login'">
+      <div nz-col [nzSpan]="12">
+        <label nz-checkbox>
+          <span>Remember me</span>
+        </label>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <a class="login-form-forgot">Forgot password</a>
+      </div>
     </div>
 
     <div class="btn">
-      <button class="btn" mat-raised-button extended>
+      <button nz-button>
         {{ formType === "login" ? "Login" : "Sign Up" }}
       </button>
+    </div>
+
+    <div class="with">
+      <div class="divider">
+        <span>Or {{ formType === "login" ? "Log In" : "Sign Up" }} With</span>
+      </div>
+
+      <div class="social-login-icons">
+        <button class="icon">
+          <nz-icon nzType="google-circle" nzTheme="fill" />
+          Google
+        </button>
+        <button class="icon">
+          <nz-icon nzType="facebook" nzTheme="fill" />
+          Facebook
+        </button>
+      </div>
     </div>
   </form>
 
@@ -81,7 +120,7 @@
     <button
       (click)="formType === 'login' ? navigateToSignup() : navigateToLogin()"
     >
-      {{ formType === "login" ? "Sign Up" : "Login" }}
+      {{ formType === "login" ? "SignUp" : "Login" }}
     </button>
   </div>
 </div>

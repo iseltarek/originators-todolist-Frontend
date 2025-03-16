@@ -1,18 +1,20 @@
 <mat-chip-grid #taglist>
+  <input
+    nz-input
+    placeholder="Add Tags"
+    [matChipInputFor]="taglist"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+    (matChipInputTokenEnd)="add($event)"
+  />
   <mat-chip-option
     *ngFor="let Tag of tags"
     [selectable]="selectable"
     [removable]="removable"
     (removed)="remove(Tag)"
   >
-    {{ Tag }} <mat-icon matChipRemove *ngIf="removable">cancel </mat-icon>
+    {{ Tag }}
+    <nz-icon *ngIf="removable" nzType="close-circle" nzTheme="outline" />
   </mat-chip-option>
-  <input
-    placeholder="Add Tags"
-    [matChipInputFor]="taglist"
-    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-    (matChipInputTokenEnd)="add($event)"
-  />
   @if(errorMessage){
   <span class="error-message">{{ errorMessage }}</span>
   }

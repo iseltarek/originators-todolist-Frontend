@@ -10,13 +10,15 @@ import { CommonModule } from '@angular/common';
   selector: 'app-alltasks',
   imports: [TaskCardComponent, CommonModule],
   templateUrl: './alltasks.component.html',
-  styleUrl: './alltasks.component.css',
+  styleUrl: './alltasks.component.less',
 })
 export class AlltasksComponent implements OnInit {
   private tasksSubject = new BehaviorSubject<Note[]>([]);
   tasks$ = this.tasksSubject.asObservable();
   taskAddedSubscription: Subscription | undefined;
   taskDeletedSubscription: Subscription | undefined;
+  logoutSubscription: Subscription | undefined;
+
   constructor(
     public todoService: TodoService,
     public todoStateService: TodoStateService
@@ -56,6 +58,9 @@ export class AlltasksComponent implements OnInit {
         }
       }
     );
+  }
+  resetTasks() {
+    this.tasksSubject.next([]);
   }
 
   ngOnDestroy() {

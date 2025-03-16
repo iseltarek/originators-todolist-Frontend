@@ -41,6 +41,7 @@ export class TodoService {
       headers: this.getAuthHeader(),
     });
   }
+
   getAuthHeader(): HttpHeaders {
     return new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

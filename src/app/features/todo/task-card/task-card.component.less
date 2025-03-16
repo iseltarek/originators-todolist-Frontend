@@ -1,22 +1,56 @@
-mat-card {
-  max-width: 270px;
-  height: 300px;
-  background-color: #d9d9d9;
-  border-radius: 5%;
+@import "../../../../styles.less";
+
+.task-card {
+  width: 34.8rem;
+  height: 27.3rem;
+  background-color: @background-color;
+  border-radius: 1.5rem;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-mat-card:hover {
+.task-card:hover {
   transform: translateY(-5px);
 }
-mat-card-header {
+.task-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+}
+.task-header button {
+  background-color: @background-color;
+  border: none;
+}
+.icon {
+  font-size: 2.5rem;
 }
 
-mat-card-title {
-  font-size: 1.8rem;
+.task-header h3 {
+  font-size: 2rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  color: @text-color;
+}
+.content p {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #595959;
+}
+.invite-btn {
+  background-color: black;
+  color: white;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  gap: 0.5rem;
+}
+.task-tags {
+  color: @text-color;
+}
+.tag {
+  color: @text-color;
+  font-size: 1.6rem;
+  padding: 0.8rem;
+  border-radius: 1rem;
 }
 mat-card-subtitle {
   color: orangered;
@@ -59,11 +93,4 @@ mat-card-footer {
   background-color: #d9d9d9;
   border: none;
   cursor: pointer;
-}
-
-mat-chip {
-  background-color: #b6b6b6;
-}
-mat-chip:hover {
-  background-color: #9a9a9a;
 }

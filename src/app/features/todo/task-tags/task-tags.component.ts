@@ -6,10 +6,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatInputModule } from '@angular/material/input';
+import { AntdModule } from '../../../shared/antD.module';
 
 @Component({
   selector: 'app-task-tags',
-  imports: [MaterialssModule, CommonModule, MatInputModule],
+  imports: [MaterialssModule, CommonModule, MatInputModule, AntdModule],
   templateUrl: './task-tags.component.html',
   styleUrl: './task-tags.component.css',
 })
@@ -18,7 +19,7 @@ export class TaskTagsComponent {
   selectable = true;
   removable = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  @Input() tags: string[] = []; // ✅ Receive initial tags
+  @Input() tags: string[] = [];
   @Output() tagsUpdated = new EventEmitter<string[]>();
   errorMessage = '';
 

@@ -12,11 +12,13 @@ import { MaterialssModule } from '../../material.module';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/user.model';
+import { AntdModule } from '../../antD.module';
+
 @Component({
   selector: 'app-auth-form',
-  imports: [MaterialssModule, ReactiveFormsModule, CommonModule],
+  imports: [MaterialssModule, ReactiveFormsModule, CommonModule, AntdModule],
   templateUrl: './auth-form.component.html',
-  styleUrl: './auth-form.component.css',
+  styleUrl: './auth-form.component.less',
 })
 export class AuthFormComponent {
   @Input() formType: 'login' | 'signup' = 'login';
@@ -31,7 +33,6 @@ export class AuthFormComponent {
       {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
-        name: [''],
       },
       {
         validators:
@@ -44,6 +45,10 @@ export class AuthFormComponent {
     if (this.formType === 'signup') {
       this.authForm.addControl(
         'confirmPassword',
+        this.fb.control('', [Validators.required])
+      );
+      this.authForm.addControl(
+        'name',
         this.fb.control('', [Validators.required])
       );
     }
@@ -90,6 +95,7 @@ export class AuthFormComponent {
     if (control.errors['email']) return 'Invalid email format';
     if (control.errors['minlength'])
       return `Minimum length is ${control.errors['minlength'].requiredLength}`;
+    if (control.errors['name']) return `User${controlName} is required`;
     if (
       controlName === 'confirmPassword' &&
       this.authForm.errors?.['passwordsNotMatching']

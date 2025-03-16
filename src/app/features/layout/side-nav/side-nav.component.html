@@ -1,29 +1,52 @@
-<div class="sidenav-container">
-  <div class="logo-container">
-    <img src="assets/logo.png" alt="Logo" />
+<nz-layout>
+  <div class="logo">
+    <img
+      src="https://s3-alpha-sig.figma.com/img/0f0e/5f75/8fb893985e673d3bd6a7767abe601284?Expires=1742774400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Fvq27DpHEJk2z7huGTHNaa0LyMHxfLR78au2rm9uz-8GPgQYPHwHbjB7qursEyLm2m~rtA1cTAa7mb7RswCJ~zfKMrspEXgmhfn3mdt7p4xHqY-8895N~sguR3OBtwsfpByuYcGIsHhiNSDu8y6dn4MWRvAPG0yhK9~sFvYs7Sa2q9Mvo3WiJWCXkl1LvDlQz7~8BJ-q8ug-vheoUaHLzdKw7uXrXUNC5cnHw~1UGr~9erJJnP9vf7uWzNWIfwKObwis2uMmOZ6RUbWEyDMRzlOxmrUGkIx4NVfjPickLcw6zgMlB1sWxNVzF7h8P1t-1HMzvoidOs37m9isbMdiaQ__"
+      alt="Logo"
+    />
   </div>
-  <mat-nav-list>
-    <a mat-list-item routerLink="/home" routerLinkActive="active">
-      <mat-icon>task</mat-icon> My Tasks
-    </a>
-    <a mat-list-item routerLink="/profile" routerLinkActive="active">
-      <mat-icon>account_circle</mat-icon> Profile
-    </a>
-    <a mat-list-item routerLink="/share" routerLinkActive="active">
-      <mat-icon>reply</mat-icon> Share
-    </a>
-    <a mat-list-item routerLink="/calendar" routerLinkActive="active">
-      <mat-icon>calendar_today</mat-icon> Calendar
-    </a>
-    <a mat-list-item routerLink="/friends" routerLinkActive="active">
-      <mat-icon>people</mat-icon> Friends
-    </a>
-  </mat-nav-list>
 
-  <mat-action-list class="bottom-list">
-    <button mat-button><mat-icon>settings</mat-icon> Settings</button>
-    <button mat-button (click)="logout()">
-      <mat-icon>logout</mat-icon> Log Out
-    </button>
-  </mat-action-list>
-</div>
+  <div class="content">
+    <div nz-menu class="main-menu-item active">
+      <div class="btn-cont">
+        <span nz-icon nzType="file-text"></span>
+        <button nz-button>My Trackers</button>
+      </div>
+      <div class="sub-menu">
+        <a><span class="line"></span> To Do</a>
+        <a><span class="line"></span> In Progress</a>
+        <a><span class="line"></span> Done</a>
+      </div>
+    </div>
+
+    <ul nz-menu nzMode="inline" class="sidebar-menu">
+      <li nz-menu-item>
+        <h4 class="menu-header">General</h4>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="user"></span>
+        <button nz-button>Profile</button>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="calendar"></span>
+        <button nz-button>Calendar</button>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="team"></span>
+        <button nz-button>Friends</button>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="delete"></span>
+        <button nz-button>Trash</button>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="setting"></span>
+        <button nz-button>Settings</button>
+      </li>
+    </ul>
+    <div class="logout">
+      <span nz-icon nzType="logout"></span>
+      <button nz-button (click)="logout()">Log Out</button>
+    </div>
+  </div>
+</nz-layout>
