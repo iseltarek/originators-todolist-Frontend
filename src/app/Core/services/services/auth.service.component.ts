@@ -1,17 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  tap,
+  throwError,
+} from 'rxjs';
 import { AuthResponse } from '../../../shared/models/authresponse.model';
 import { environment } from '../../../../environments/environment';
 import { User } from '../../../shared/models/user.model';
+import { STORAGE_KEYS } from '../../../shared/storage-keys';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   baseUrl = environment.apiUrl + '/auth';
-  TokenKey = 'token';
+
+  readonly TOKEN_KEY = STORAGE_KEYS.TOKEN_KEY;
+  readonly USER_DATA_KEY = STORAGE_KEYS.USER_DATA_KEY;
+  private readonly SESSION_EXPIRY_KEY = STORAGE_KEYS.SESSION_EXPIRY_KEY;
+  private readonly SESSION_DURATION = 60 * 60 * 1000;
+  Expired_TOKEN = false;
   private isAuthenticatedUserSubject = new BehaviorSubject<boolean>(false);
   constructor(public httpClient: HttpClient, public router: Router) {}
 
@@ -22,12 +35,16 @@ export class AuthService {
         email,
       })
       .pipe(
-        map((response: AuthResponse) => {
-          if (response) {
-            localStorage.setItem(this.TokenKey, response.verificationToken);
-            this.isAuthenticatedUserSubject.next(true);
+        tap((user) => {
+          if (user) {
+            this.setUserSession(user);
           }
-          return response;
+        }),
+        catchError((err) => {
+          if (err?.error?.status === 401) {
+            this.Expired_TOKEN = true;
+          }
+          return throwError(() => err); 
         })
       );
   }
@@ -40,26 +57,67 @@ export class AuthService {
         email: user.email,
       })
       .pipe(
-        catchError((error) => {
-          return throwError(() => error);
+        catchError((err)=>{
+          return throwError(() => err); 
         })
       );
   }
 
   public logout(): void {
+    sessionStorage.removeItem(this.SESSION_EXPIRY_KEY);
+    sessionStorage.removeItem(this.USER_DATA_KEY);
+    localStorage.removeItem(this.TOKEN_KEY);
     this.isAuthenticatedUserSubject.next(false);
-    localStorage.removeItem(this.TokenKey);
+    sessionStorage.clear();
     this.router.navigate(['/landingpage']);
   }
 
+  private setUserSession(user: AuthResponse): void {
+    if (user) {
+      const data = {
+        name: user.user.name,
+        email: user.user.email,
+        token: user.verificationToken,
+      };
+      localStorage.setItem(this.TOKEN_KEY, data.token);
+      sessionStorage.setItem(this.USER_DATA_KEY, JSON.stringify(data));
+      this.setSessionExpiry();
+      this.isAuthenticatedUserSubject.next(true);
+      this.Expired_TOKEN=false;
+      this.startSessionExpiryCheck();
+    }
+  }
+
+  private setSessionExpiry(): void {
+    const expiryTime = new Date().getTime() + this.SESSION_DURATION;
+    sessionStorage.setItem(this.SESSION_EXPIRY_KEY, expiryTime.toString());
+  }
+
+  private checkSessionExpiry(): void {
+    const expiryTime = sessionStorage.getItem(this.SESSION_EXPIRY_KEY);
+    if (expiryTime) {
+      const currentTime = new Date().getTime();
+      if (currentTime >= +expiryTime) {
+        this.logout();
+      }
+    }
+    if(this.Expired_TOKEN){
+      this.Expired_TOKEN=false;
+      this.logout();
+    }
+  }
+
+  private startSessionExpiryCheck(): void {
+    setInterval(() => {
+      this.checkSessionExpiry();
+    }, 10 * 60 * 1000);
+  }
+
   public isUserAuthenticated(): boolean {
+    this.checkSessionExpiry();
     return (
       this.isAuthenticatedUserSubject.value ||
-      !!localStorage.getItem(this.TokenKey)
+      !!localStorage.getItem(this.TOKEN_KEY)
     );
   }
-  // public getUserName(): string {
-  //   const UserToken = localStorage.getItem(this.TokenKey);
-  //   return UserToken.name;
-  // }
 }

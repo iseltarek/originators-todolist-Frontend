@@ -4,7 +4,7 @@ export interface Note {
   description: string;
   customId: number;
   title: string;
-  dueDate: Date | null;
+  dueDate?: Date | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 }

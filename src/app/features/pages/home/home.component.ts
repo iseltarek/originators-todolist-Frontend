@@ -12,6 +12,7 @@ import { ModalService } from '../../../shared/modal.service';
 import { MaterialssModule } from '../../../shared/material.module';
 import { AlltasksComponent } from '../../todo/alltasks/alltasks.component';
 import { AntdModule } from '../../../shared/antD.module';
+import { TodoStateService } from '../../../Core/services/services/todo.state.service';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,10 @@ export class HomeComponent implements OnInit {
   today: Date = new Date();
   isModalOpen = false;
   @ViewChild('createTaskModal', { static: false }) createTaskModal!: ElementRef;
-  constructor(public modalService: ModalService) {}
+  constructor(
+    public modalService: ModalService,
+    public todoStateService: TodoStateService
+  ) {}
 
   ngOnInit() {
     this.modalService.isModalOpen$.subscribe((isopen) => {

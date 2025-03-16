@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MaterialssModule } from '../../../shared/material.module';
 import {
   FormControl,
@@ -23,52 +30,86 @@ import { AntdModule } from '../../../shared/antD.module';
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.less',
 })
-export class CreateTaskComponent {
-  errorMessage = '';
-  tags: string[] = [];
+export class CreateTaskComponent implements OnInit {
   @Output() closeEvent = new EventEmitter<void>();
-  taskForm = new FormGroup({
-    title: new FormControl<string>('', [
-      Validators.required,
-      Validators.minLength(3),
-    ]),
-    description: new FormControl<string>(''),
-    date: new FormControl<Date | null>(null),
-    status: new FormControl<string>(''),
-  });
+  isEditing = false;
+  errorMessage = '';
+  updatedTaskId: number | null = null;
+  tags: string[] = [];
+  taskForm: FormGroup;
+
   constructor(
     public todoService: TodoService,
     public todoStateService: TodoStateService
-  ) {}
-
-  createTask() {
-    const newTask: Note = {
-      title: this.taskForm.get('title')?.value || '',
-      description: this.taskForm.get('description')?.value || '',
-      status: this.taskForm.get('status')?.value || 'todo',
-      createdAt: (this.taskForm.get('date')?.value as Date) || new Date(),
-      updatedAt: null,
-      dueDate: null,
-      tags: this.tags,
-      customId: 0,
-    };
-
-    this.todoService.addTask(newTask).subscribe({
-      next: (createdTask: Note) => {
-        this.closeEvent.emit();
-        this.todoStateService.setTask(createdTask);
-        this.taskForm.reset();
-      },
-      error: (err) => {
-        this.errorMessage = err.error.message;
-      },
+  ) {
+    this.taskForm = new FormGroup({
+      title: new FormControl<string>('', [Validators.required]),
+      description: new FormControl<string>(''),
+      date: new FormControl<Date | null>(null),
+      status: new FormControl<string>('todo'),
     });
   }
+
+  ngOnInit(): void {
+    this.todoStateService.taskToUpdate$.subscribe({
+      next: (taskToUpdate) => this.editTask(taskToUpdate as Note),
+    });
+  }
+
+  createTask() {
+    const task: Note = this.buildTaskObject();
+
+    const saveOperation = this.isEditing
+      ? this.todoService.updateTask(this.updatedTaskId as number, task)
+      : this.todoService.addTask(task);
+
+    saveOperation.subscribe({
+      next: (savedTask) => this.handleSuccess(savedTask),
+      error: (err) => (this.errorMessage = err.error.message),
+    });
+  }
+
+  private buildTaskObject(): Note {
+    return {
+      title: this.taskForm.value.title || '',
+      description: this.taskForm.value.description || '',
+      status: this.taskForm.value.status || 'todo',
+      createdAt: this.taskForm.value.date || new Date(),
+      updatedAt: this.isEditing ? new Date() : null,
+      dueDate: null,
+      tags: [...this.tags],
+      customId: this.isEditing ? this.updatedTaskId! : 0,
+    };
+  }
+
+  private handleSuccess(savedTask: Note): void {
+    this.closeEvent.emit();
+    if (this.isEditing) {
+      this.todoStateService.updateTask(savedTask);
+      this.todoStateService.taskToUpdate.next(null);
+    } else {
+      this.todoStateService.setTask(savedTask);
+    }
+    this.isEditing = false;
+    this.updatedTaskId = null;
+    this.taskForm.reset();
+  }
+
   updateTags(tags: string[] | Event) {
     if (tags instanceof Event) return;
     this.tags = [...tags];
   }
-  handleCancel() {
-    this.closeEvent.emit();
+
+  editTask(taskToUpdate: Note) {
+    if (taskToUpdate) {
+      this.taskForm.patchValue({
+        title: taskToUpdate.title,
+        description: taskToUpdate.description,
+        status: taskToUpdate.status,
+      });
+      this.updateTags(taskToUpdate.tags as string[]);
+      this.isEditing = true;
+      this.updatedTaskId = taskToUpdate.customId;
+    }
   }
 }

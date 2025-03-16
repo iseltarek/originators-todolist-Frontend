@@ -16,28 +16,44 @@ export class TodoService {
     public authenticationService: AuthService
   ) {}
 
-  getTaskById(taskId: string): Observable<Note> {
-    return this.httpClient.get<Note>(`${this.baseUrl}/${taskId}`);
+  getTaskById(taskId: number): Observable<Note> {
+    return this.httpClient.get<Note>(`${this.baseUrl}/${taskId}`, {
+      headers: this.getAuthHeader(),
+    });
   }
+
   getAllTasks(): Observable<Note[]> {
     return this.httpClient.get<Note[]>(`${this.baseUrl}/`, {
       headers: this.getAuthHeader(),
     });
   }
+
   deleteTask(taskId: number): Observable<any> {
     return this.httpClient.delete(`${this.baseUrl}/${taskId}`, {
       headers: this.getAuthHeader(),
     });
   }
 
-  addTask(Task: Note) {
+  addTask(task: Note) {
     const body = {
-      title: Task.title,
-      status: Task.status,
-      description: Task.description,
-      tags: Task.tags,
+      title: task.title,
+      status: task.status,
+      description: task.description,
+      tags: task.tags,
     };
     return this.httpClient.post<Note>(`${this.baseUrl}/`, body, {
+      headers: this.getAuthHeader(),
+    });
+  }
+
+  updateTask(taskId: number, task: Note): Observable<Note> {
+    const body = {
+      title: task.title,
+      status: task.status,
+      description: task.description,
+      tags: task.tags,
+    };
+    return this.httpClient.put<Note>(`${this.baseUrl}/${taskId}`, body, {
       headers: this.getAuthHeader(),
     });
   }

@@ -17,6 +17,7 @@ export class AlltasksComponent implements OnInit {
   tasks$ = this.tasksSubject.asObservable();
   taskAddedSubscription: Subscription | undefined;
   taskDeletedSubscription: Subscription | undefined;
+  taskUpdatedSubscription: Subscription | undefined;
   logoutSubscription: Subscription | undefined;
 
   constructor(
@@ -26,7 +27,8 @@ export class AlltasksComponent implements OnInit {
 
   ngOnInit() {
     this.addTask();
-    this.deleteNote();
+    this.deleteTask();
+    this.updateTask();
     this.loadTasks();
   }
 
@@ -38,7 +40,7 @@ export class AlltasksComponent implements OnInit {
     });
   }
 
-  deleteNote() {
+  deleteTask() {
     this.taskDeletedSubscription = this.todoStateService.taskDeleted$.subscribe(
       (TaskId) => {
         const updatedTasks = this.tasksSubject.value.filter(
@@ -63,6 +65,23 @@ export class AlltasksComponent implements OnInit {
     this.tasksSubject.next([]);
   }
 
+  updateTask() {
+    this.taskUpdatedSubscription =
+      this.todoStateService.taskToUpdate$.subscribe((updatedTask) => {
+        if (updatedTask) {
+          const currentTasks = this.tasksSubject.value;
+          const taskIndex = currentTasks.findIndex(
+            (task) => task.customId === updatedTask.customId
+          );
+
+          if (taskIndex !== -1) {
+            const updatedTasks = [...currentTasks];
+            updatedTasks[taskIndex] = updatedTask;
+            this.tasksSubject.next(updatedTasks);
+          }
+        }
+      });
+  }
   ngOnDestroy() {
     this.taskAddedSubscription!.unsubscribe();
   }

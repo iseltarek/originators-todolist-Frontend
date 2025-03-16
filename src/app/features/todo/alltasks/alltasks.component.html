@@ -1,7 +1,7 @@
 <div class="grid-container">
   <ul class="tasks-grid">
     <li class="task-item" *ngFor="let task of tasks$ | async">
-      <app-task-card [Task]="task" />
+      <app-task-card [task]="task" />
     </li>
   </ul>
 </div>

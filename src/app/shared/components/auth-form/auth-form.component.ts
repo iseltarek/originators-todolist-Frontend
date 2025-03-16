@@ -25,7 +25,8 @@ export class AuthFormComponent {
   @Output() formSubmit = new EventEmitter<User>();
   @Input() errorMessage: string | null = null;
 
-  hide = signal(true);
+  // hide = signal(true);
+  hide = '';
   authForm: FormGroup;
 
   constructor(private fb: FormBuilder, public router: Router) {
@@ -75,8 +76,8 @@ export class AuthFormComponent {
   }
 
   togglePasswordVisibility(event: MouseEvent) {
-    this.hide.set(!this.hide());
-    event.stopPropagation();
+    // this.hide.set(!this.hide());
+    // event.stopPropagation();
   }
 
   navigateToSignup() {

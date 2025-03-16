@@ -1,6 +1,6 @@
 <nz-card class="task-card">
   <div class="task-header">
-    <h3>{{ Task.title }}</h3>
+    <h3>{{ task.title }}</h3>
     <div class="menu">
       <button nz-button nzType="text">
         <nz-icon class="icon" nzType="share-alt" nzTheme="outline" />
@@ -23,8 +23,8 @@
   </div>
   <div class="content">
     <p>
-      {{ Task.description }}
-      <a *ngIf="Task.description.length >= 50" href="#">See More</a>
+      {{ task.description }}
+      <a *ngIf="task.description.length >= 50" href="#">See More</a>
     </p>
   </div>
 
@@ -59,7 +59,7 @@
   ></nz-progress>
 
   <div class="task-tags">
-    <nz-tag class="tag" *ngFor="let tag of Task.tags" nzColor="#FFF1F0">{{
+    <nz-tag class="tag" *ngFor="let tag of task.tags" nzColor="#FFF1F0">{{
       tag
     }}</nz-tag>
     <!-- <nz-tag nzColor="volcano">UI</nz-tag>
