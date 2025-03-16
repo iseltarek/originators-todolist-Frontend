@@ -81,7 +81,9 @@ export class CreateTaskComponent implements OnInit {
       customId: this.isEditing ? this.updatedTaskId! : 0,
     };
   }
-
+  handleCancel() {
+    this.closeEvent.emit();
+  }
   private handleSuccess(savedTask: Note): void {
     this.closeEvent.emit();
     if (this.isEditing) {
