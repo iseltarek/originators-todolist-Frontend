@@ -11,12 +11,12 @@
       </a>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu>
-          <li nz-menu-item (click)="changeStatus('in-progress')">
-            In Progress
+          <li nz-menu-item (click)="deleteTask()">
+            <nz-icon nzType="delete" nzTheme="outline" /> Deleted
           </li>
-          <li nz-menu-item (click)="changeStatus('Completed')">Completed</li>
-
-          <li nz-menu-item (click)="changeStatus('todo')">Todo</li>
+          <li nz-menu-item (click)="editTask()">
+            <nz-icon nzType="edit" nzTheme="outline" /> Edit
+          </li>
         </ul>
       </nz-dropdown-menu>
     </div>

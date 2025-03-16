@@ -1,5 +1,5 @@
 <nz-modal
-  [(nzVisible)]="closeEvent"
+  [(nzVisible)]="isVisible"
   class="card"
   [nzFooter]="null"
   nzWidth="70rem"
@@ -13,7 +13,9 @@
   <div *nzModalTitle class="header">
     <div class="board-container">
       <div class="board-header">
-        <h2>Create New Tracker</h2>
+        <h2>
+          {{ isEditing === true ? "Edit Your tracker " : "Create New Tracker" }}
+        </h2>
         <div>
           <button nz-button nzType="text">
             <nz-icon

@@ -26,6 +26,7 @@ export class AuthService {
   private readonly SESSION_DURATION = 60 * 60 * 1000;
   Expired_TOKEN = false;
   private isAuthenticatedUserSubject = new BehaviorSubject<boolean>(false);
+  isAuthenticatedUserSubject$ = this.isAuthenticatedUserSubject.asObservable();
   constructor(public httpClient: HttpClient, public router: Router) {}
 
   public login(email: string, password: string): Observable<AuthResponse> {
@@ -44,7 +45,7 @@ export class AuthService {
           if (err?.error?.status === 401) {
             this.Expired_TOKEN = true;
           }
-          return throwError(() => err); 
+          return throwError(() => err);
         })
       );
   }
@@ -57,8 +58,8 @@ export class AuthService {
         email: user.email,
       })
       .pipe(
-        catchError((err)=>{
-          return throwError(() => err); 
+        catchError((err) => {
+          return throwError(() => err);
         })
       );
   }
@@ -83,7 +84,7 @@ export class AuthService {
       sessionStorage.setItem(this.USER_DATA_KEY, JSON.stringify(data));
       this.setSessionExpiry();
       this.isAuthenticatedUserSubject.next(true);
-      this.Expired_TOKEN=false;
+      this.Expired_TOKEN = false;
       this.startSessionExpiryCheck();
     }
   }
@@ -101,8 +102,8 @@ export class AuthService {
         this.logout();
       }
     }
-    if(this.Expired_TOKEN){
-      this.Expired_TOKEN=false;
+    if (this.Expired_TOKEN) {
+      this.Expired_TOKEN = false;
       this.logout();
     }
   }

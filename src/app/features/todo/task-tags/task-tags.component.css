@@ -2,6 +2,7 @@ mat-chip-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem;
+  overflow: hidden;
 }
 
 input {
@@ -29,7 +30,8 @@ input:focus {
 .ant-input,
 .input {
   height: 4.5rem;
-  width: 25rem;
+  /* width: 25rem; */
+  font-size: 1.6rem;
   border-radius: 1.6rem;
   border: 0.2rem solid #00000040;
   background-color: white;

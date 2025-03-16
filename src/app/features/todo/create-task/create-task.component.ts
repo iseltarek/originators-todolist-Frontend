@@ -5,6 +5,7 @@ import {
   input,
   OnInit,
   Output,
+  signal,
 } from '@angular/core';
 import { MaterialssModule } from '../../../shared/material.module';
 import {
@@ -18,6 +19,7 @@ import { TodoService } from '../../../Core/services/services/todo.service';
 import { TodoStateService } from '../../../Core/services/services/todo.state.service';
 import { TaskTagsComponent } from '../task-tags/task-tags.component';
 import { AntdModule } from '../../../shared/antD.module';
+import { ModalService } from '../../../shared/modal.service';
 
 @Component({
   selector: 'app-create-task',
@@ -32,6 +34,7 @@ import { AntdModule } from '../../../shared/antD.module';
 })
 export class CreateTaskComponent implements OnInit {
   @Output() closeEvent = new EventEmitter<void>();
+  isVisible = false;
   isEditing = false;
   errorMessage = '';
   updatedTaskId: number | null = null;
@@ -40,7 +43,8 @@ export class CreateTaskComponent implements OnInit {
 
   constructor(
     public todoService: TodoService,
-    public todoStateService: TodoStateService
+    public todoStateService: TodoStateService,
+    public modalService: ModalService
   ) {
     this.taskForm = new FormGroup({
       title: new FormControl<string>('', [Validators.required]),
@@ -53,6 +57,14 @@ export class CreateTaskComponent implements OnInit {
   ngOnInit(): void {
     this.todoStateService.taskToUpdate$.subscribe({
       next: (taskToUpdate) => this.editTask(taskToUpdate as Note),
+    });
+
+    this.modalService.isModalVisible$.subscribe((visible) => {
+      this.isVisible = visible;
+    });
+
+    this.modalService.isEditing$.subscribe((editing) => {
+      this.isEditing = editing;
     });
   }
 
@@ -82,7 +94,7 @@ export class CreateTaskComponent implements OnInit {
     };
   }
   handleCancel() {
-    this.closeEvent.emit();
+    this.modalService.closeModal();
   }
   private handleSuccess(savedTask: Note): void {
     this.closeEvent.emit();

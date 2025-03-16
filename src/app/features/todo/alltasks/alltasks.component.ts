@@ -5,6 +5,7 @@ import { Note } from '../../../shared/models/note.model';
 import { TodoStateService } from '../../../Core/services/services/todo.state.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../Core/services/services/auth.service.component';
 
 @Component({
   selector: 'app-alltasks',
@@ -13,8 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './alltasks.component.less',
 })
 export class AlltasksComponent implements OnInit {
-  private tasksSubject = new BehaviorSubject<Note[]>([]);
-  tasks$ = this.tasksSubject.asObservable();
+  tasks: Note[] = [];
   taskAddedSubscription: Subscription | undefined;
   taskDeletedSubscription: Subscription | undefined;
   taskUpdatedSubscription: Subscription | undefined;
@@ -22,20 +22,28 @@ export class AlltasksComponent implements OnInit {
 
   constructor(
     public todoService: TodoService,
-    public todoStateService: TodoStateService
+    public todoStateService: TodoStateService,
+    public authnticationService: AuthService
   ) {}
 
   ngOnInit() {
+    this.authnticationService.isAuthenticatedUserSubject$.subscribe({
+      next: (isAuthenticated) => {
+        if (!isAuthenticated) {
+          this.resetTasks();
+        }
+      },
+    });
+    this.loadTasks();
     this.addTask();
     this.deleteTask();
     this.updateTask();
-    this.loadTasks();
   }
 
   loadTasks() {
     this.todoService.getAllTasks().subscribe({
       next: (res) => {
-        this.tasksSubject.next(res);
+        this.tasks = res;
       },
     });
   }
@@ -43,10 +51,7 @@ export class AlltasksComponent implements OnInit {
   deleteTask() {
     this.taskDeletedSubscription = this.todoStateService.taskDeleted$.subscribe(
       (TaskId) => {
-        const updatedTasks = this.tasksSubject.value.filter(
-          (task) => task.customId !== TaskId
-        );
-        this.tasksSubject.next(updatedTasks);
+        this.tasks = this.tasks.filter((task) => task.customId !== TaskId);
       }
     );
   }
@@ -55,34 +60,37 @@ export class AlltasksComponent implements OnInit {
     this.taskAddedSubscription = this.todoStateService.taskAdded$.subscribe(
       (task) => {
         if (task) {
-          const updatedTasks = [...this.tasksSubject.value, task];
-          this.tasksSubject.next(updatedTasks);
+          this.tasks.push(task);
         }
       }
     );
-  }
-  resetTasks() {
-    this.tasksSubject.next([]);
   }
 
   updateTask() {
     this.taskUpdatedSubscription =
       this.todoStateService.taskToUpdate$.subscribe((updatedTask) => {
         if (updatedTask) {
-          const currentTasks = this.tasksSubject.value;
-          const taskIndex = currentTasks.findIndex(
+          const taskIndex = this.tasks.findIndex(
             (task) => task.customId === updatedTask.customId
           );
 
           if (taskIndex !== -1) {
-            const updatedTasks = [...currentTasks];
-            updatedTasks[taskIndex] = updatedTask;
-            this.tasksSubject.next(updatedTasks);
+            this.tasks[taskIndex] = updatedTask;
           }
         }
       });
   }
-  ngOnDestroy() {
-    this.taskAddedSubscription!.unsubscribe();
+
+  resetTasks() {
+    this.tasks = [];
+    this.todoStateService.setTask(null);
+    this.todoStateService.deleteTask(null);
+    this.todoStateService.updateTask(null);
   }
+  // ngOnDestroy() {
+  //   this.taskAddedSubscription?.unsubscribe();
+  //   this.taskDeletedSubscription?.unsubscribe();
+  //   this.taskUpdatedSubscription?.unsubscribe();
+  //   this.logoutSubscription?.unsubscribe();
+  // }
 }

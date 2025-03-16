@@ -13,6 +13,7 @@ import { MaterialssModule } from '../../../shared/material.module';
 import { AlltasksComponent } from '../../todo/alltasks/alltasks.component';
 import { AntdModule } from '../../../shared/antD.module';
 import { TodoStateService } from '../../../Core/services/services/todo.state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -31,16 +32,16 @@ import { TodoStateService } from '../../../Core/services/services/todo.state.ser
 export class HomeComponent implements OnInit {
   today: Date = new Date();
   isModalOpen = false;
-  @ViewChild('createTaskModal', { static: false }) createTaskModal!: ElementRef;
-  constructor(
-    public modalService: ModalService,
-    public todoStateService: TodoStateService
-  ) {}
+  modalSubscription!: Subscription;
+
+  constructor(public modalService: ModalService) {}
 
   ngOnInit() {
-    this.modalService.isModalOpen$.subscribe((isopen) => {
-      this.isModalOpen = isopen;
-    });
+    this.modalSubscription = this.modalService.isModalVisible$.subscribe(
+      (isOpen) => {
+        this.isModalOpen = isOpen;
+      }
+    );
   }
 
   createTask() {
@@ -51,6 +52,11 @@ export class HomeComponent implements OnInit {
     this.modalService.closeModal();
   }
 
+  ngOnDestroy() {
+    this.modalSubscription.unsubscribe();
+  }
+
+  @ViewChild('createTaskModal', { static: false }) createTaskModal!: ElementRef;
   // @HostListener('document:click', ['$event'])
   // onDocumentClick(event: MouseEvent) {
   //   if (this.isModalOpen && this.createTaskModal) {

@@ -6,7 +6,7 @@ import { AntdModule } from '../../../shared/antD.module';
 
 @Component({
   selector: 'app-side-nav',
-  imports: [MaterialssModule, RouterLink, AntdModule],
+  imports: [MaterialssModule, AntdModule],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.less',
 })

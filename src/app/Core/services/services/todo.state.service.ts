@@ -17,11 +17,11 @@ export class TodoStateService {
     this.taskAdded.next(task);
   }
 
-  deleteTask(taskId: number) {
+  deleteTask(taskId: number | null) {
     this.taskDeleted.next(taskId);
   }
 
-  updateTask(task: Note) {
+  updateTask(task: Note | null) {
     this.taskToUpdate.next(task);
   }
 }

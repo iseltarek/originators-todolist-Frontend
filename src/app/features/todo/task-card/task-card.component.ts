@@ -50,7 +50,7 @@ export class TaskCardComponent implements OnInit {
   editTask() {
     this.todoService.getTaskById(this.task.customId).subscribe({
       next: (resulteTask) => {
-        this.modalService.openModal();
+        this.modalService.openModal(true);
         this.todoStateService.updateTask(resulteTask);
       },
     });
