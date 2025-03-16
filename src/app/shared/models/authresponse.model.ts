@@ -1,7 +1,7 @@
 export interface AuthResponse {
   verificationToken: string;
   user: {
-    id: string;
+    email: string;
     name: string;
   };
 }
