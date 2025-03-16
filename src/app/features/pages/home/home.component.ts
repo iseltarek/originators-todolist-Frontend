@@ -11,6 +11,7 @@ import { CreateTaskComponent } from '../../todo/create-task/create-task.componen
 import { ModalService } from '../../../shared/modal.service';
 import { MaterialssModule } from '../../../shared/material.module';
 import { AlltasksComponent } from '../../todo/alltasks/alltasks.component';
+import { TodoStateService } from '../../../Core/services/services/todo.state.service';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,10 @@ export class HomeComponent implements OnInit {
   today: Date = new Date();
   isModalOpen = false;
   @ViewChild('createTaskModal', { static: false }) createTaskModal!: ElementRef;
-  constructor(public modalService: ModalService) {}
+  constructor(
+    public modalService: ModalService,
+    public todoStateService: TodoStateService
+  ) {}
 
   ngOnInit() {
     this.modalService.isModalOpen$.subscribe((isopen) => {
@@ -37,7 +41,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  crateTask() {
+  createTask() {
     this.modalService.openModal();
   }
 
@@ -51,6 +55,7 @@ export class HomeComponent implements OnInit {
       const modalElement = this.createTaskModal.nativeElement;
       if (!modalElement.contains(event.target as Node)) {
         this.closeTaskModal();
+        this.todoStateService.taskToUpdate.next(null);
       }
     }
   }

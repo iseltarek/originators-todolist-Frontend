@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TodoService } from '../../../Core/services/services/todo.service';
 import { Note } from '../../../shared/models/note.model';
 import { TodoStateService } from '../../../Core/services/services/todo.state.service';
+import { ModalService } from '../../../shared/modal.service';
 
 @Component({
   selector: 'app-task-card',
@@ -14,11 +15,13 @@ import { TodoStateService } from '../../../Core/services/services/todo.state.ser
 })
 export class TaskCardComponent implements OnInit {
   chipMenu: MatMenuPanel<any> | null | undefined;
-  @Input() Task!: Note;
+  @Input() task!: Note;
   @Output() DeleteNote = new EventEmitter<number>();
+
   constructor(
     public todoService: TodoService,
-    public todoStateService: TodoStateService
+    public todoStateService: TodoStateService,
+    public modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -26,28 +29,29 @@ export class TaskCardComponent implements OnInit {
   }
 
   getProgressValue(): number {
-    if (this.Task.status == 'todo') return 0;
-    else if (this.Task.status == 'in-progress') return 50;
+    if (this.task.status == 'todo') return 0;
+    else if (this.task.status == 'in-progress') return 50;
     return 100;
   }
 
   changeStatus(status: string) {
-    this.Task.status = status;
+    this.task.status = status;
   }
 
   deleteTask() {
-    this.todoService.deleteTask(this.Task.customId).subscribe({
+    this.todoService.deleteTask(this.task.customId).subscribe({
       next: () => {
-        this.todoStateService.deleteTask(this.Task.customId);
+        this.todoStateService.deleteTask(this.task.customId);
       },
     });
   }
 
   editTask() {
-    if (this.Task.tags)
-      for (const tag of this.Task.tags) {
-        console.log(tag);
-      }
-    console.log('no tage');
+    this.todoService.getTaskById(this.task.customId).subscribe({
+      next: (resulteTask) => {
+        this.modalService.openModal();
+        this.todoStateService.updateTask(resulteTask);
+      },
+    });
   }
 }
