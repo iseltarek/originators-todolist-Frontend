@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -21,6 +21,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 
 const materialcomponent = [
+  MatDialogModule,
   MatSelectModule,
   MatDatepickerModule,
   MatChipsModule,

@@ -1,115 +1,76 @@
-<!-- task-form.component.html -->
-<form [formGroup]="taskForm" class="card">
-  <div class="card-container">
-    <div class="header">
-      <h2>Create New Task</h2>
-      <button class="share"><mat-icon>share</mat-icon></button>
-    </div>
-    <img
-      class="image"
-      src="https://s3-alpha-sig.figma.com/img/2107/44f0/a0cbce5cefd93c20a873290a079d9dee?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=SYLoSBwM7hjNeSTGN0kyXjH668uZYlsBWBpKJmDv8tbnviiv-J-5KpvUhDf~pfVGws8ImLOV-9H~NCycsH~Z0M95nNmSmlDWxoWz8BWzIbphFwoqj2Epo3yXrIga8Rhhxqd-iIDTzstODcpe-1owckPS6jzemwr2wTSBtClQSonjsIKZEn3xFHjWAnp8ksPWLA7uJs9zxd~aWXivtMeK2bSNfW5IxdAEmqGRa56ZW0qAfos-V2GgkjeXZgjozi1mrpPWVh6vEKgr7LiaoR8wy7cGzih3YSbQHoZvNDNSXVWd1L5X-ZCjmh3EshT7TOKOoq9t5p-7C6iHt1sqRBh~tg__"
-      alt="image"
-    />
-
-    <div class="content">
-      <div class="item">
-        <label>Task Title:</label>
-        <input formControlName="title" />
-      </div>
-
-      <div class="item">
-        <label>Description:</label>
-        <textarea matInput formControlName="description"></textarea>
-      </div>
-
-      <!-- <div class="item">
-        <label>status:</label>
-        <mat-select formControlName="status">
-          <mat-option value="todo">todo</mat-option>
-          <mat-option value="in-progress">in progress</mat-option>
-          <mat-option value="done">done</mat-option>
-        </mat-select>
-      </div> -->
-      <div class="item">
-        <span>Date:</span>
+<nz-modal
+  [(nzVisible)]="closeEvent"
+  class="card"
+  [nzFooter]="null"
+  nzWidth="70rem"
+  [nzClosable]="false"
+  [nzStyle]="{
+    height: '60rem',
+    'border-radius': '10px',
+    'background-color': '#f8f9fa'
+  }"
+>
+  <div *nzModalTitle class="header">
+    <div class="board-container">
+      <div class="board-header">
+        <h2>Create New Tracker</h2>
         <div>
-          <input
-            [matDatepicker]="picker"
-            formControlName="date"
-            placeholder="Day / Month / Year"
-          />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <button nz-button nzType="text">
+            <nz-icon
+              class="icon"
+              nzType="share-alt"
+              nzTheme="outline"
+            ></nz-icon>
+          </button>
+          <button (click)="handleCancel()" nz-button nzType="text">
+            <nz-icon nzType="close-circle" nzTheme="outline" />
+          </button>
         </div>
       </div>
-
-      <div class="item">
-        <label>tags:</label>
-        <app-task-tags [tags]="tags" (tagsUpdated)="updateTags($event)" />
-      </div>
-
-      @if(errorMessage){
-      <span class="error-message">{{ errorMessage }}</span>
-      }
     </div>
-    <div class="btn-container">
-      <button (click)="createTask()">Add Task</button>
+    <div class="image-container">
+      <img
+        src="https://s3-alpha-sig.figma.com/img/2107/44f0/a0cbce5cefd93c20a873290a079d9dee?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=SYLoSBwM7hjNeSTGN0kyXjH668uZYlsBWBpKJmDv8tbnviiv-J-5KpvUhDf~pfVGws8ImLOV-9H~NCycsH~Z0M95nNmSmlDWxoWz8BWzIbphFwoqj2Epo3yXrIga8Rhhxqd-iIDTzstODcpe-1owckPS6jzemwr2wTSBtClQSonjsIKZEn3xFHjWAnp8ksPWLA7uJs9zxd~aWXivtMeK2bSNfW5IxdAEmqGRa56ZW0qAfos-V2GgkjeXZgjozi1mrpPWVh6vEKgr7LiaoR8wy7cGzih3YSbQHoZvNDNSXVWd1L5X-ZCjmh3EshT7TOKOoq9t5p-7C6iHt1sqRBh~tg__"
+        alt="image"
+      />
     </div>
   </div>
-</form>
-<!-- <mat-card>
-    <mat-card-header>
-      <mat-card-title>Create New Task</mat-card-title>
-      <div class="date">
-        <input
-          class="dateinput"
-          [matDatepicker]="picker"
-          formControlName="date"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </div>
-    </mat-card-header>
-    <img
-      class="image"
-      src="https://s3-alpha-sig.figma.com/img/2107/44f0/a0cbce5cefd93c20a873290a079d9dee?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=SYLoSBwM7hjNeSTGN0kyXjH668uZYlsBWBpKJmDv8tbnviiv-J-5KpvUhDf~pfVGws8ImLOV-9H~NCycsH~Z0M95nNmSmlDWxoWz8BWzIbphFwoqj2Epo3yXrIga8Rhhxqd-iIDTzstODcpe-1owckPS6jzemwr2wTSBtClQSonjsIKZEn3xFHjWAnp8ksPWLA7uJs9zxd~aWXivtMeK2bSNfW5IxdAEmqGRa56ZW0qAfos-V2GgkjeXZgjozi1mrpPWVh6vEKgr7LiaoR8wy7cGzih3YSbQHoZvNDNSXVWd1L5X-ZCjmh3EshT7TOKOoq9t5p-7C6iHt1sqRBh~tg__"
-      alt="image"
-    />
-    <mat-card-content>
-      <div class="item">
-        <label>Task Title:</label>
-        <input formControlName="title" />
-      </div>
-      <div class="item">
-        <label>Description:</label>
-        <textarea matInput formControlName="description"></textarea>
-      </div>
-      <div class="item">
-        <label>Mentioned:</label>
-      </div>
-      <div class="item">
-        <label>status:</label>
-        <mat-select formControlName="status">
-          <mat-option value="todo">todo</mat-option>
-          <mat-option value="in-progress">in progress</mat-option>
-          <mat-option value="done">done</mat-option>
-        </mat-select>
-      </div>
+  <ng-container *nzModalContent>
+    <form class="form" nz-form [formGroup]="taskForm" (ngSubmit)="createTask()">
+      <nz-form-item class="item">
+        <label><nz-icon nzType="edit" nzTheme="outline" /> Title:</label>
+        <input nz-input formControlName="title" placeholder="Add Title" />
+      </nz-form-item>
 
-      <div class="item">
-        <label>tags:</label>
-        <input formControlName="title" />
-      </div>
+      <nz-form-item class="item">
+        <label
+          ><nz-icon nzType="align-left" nzTheme="outline" />Description:</label
+        >
+
+        <textarea
+          nz-input
+          formControlName="description"
+          placeholder="Description"
+        ></textarea>
+      </nz-form-item>
+
+      <nz-form-item class="item date">
+        <label><nz-icon nzType="calendar" nzTheme="outline" /> Date:</label>
+        <nz-date-picker class="input" formControlName="date"></nz-date-picker>
+      </nz-form-item>
+
+      <nz-form-item class="item">
+        <label><nz-icon nzType="tag" nzTheme="outline" /> Tags:</label>
+        <app-task-tags [tags]="tags" (tagsUpdated)="updateTags($event)" />
+      </nz-form-item>
 
       @if(errorMessage){
       <span class="error-message">{{ errorMessage }}</span>
       }
-    </mat-card-content>
-    <mat-card-footer>
-      <button (click)="createTask()">Add Task</button>
-    </mat-card-footer>
-  </mat-card> -->
-<!-- </form> -->
+
+      <div class="btn-container">
+        <button nz-button nzType="primary" class="btn">Add Tracker</button>
+      </div>
+    </form>
+  </ng-container>
+</nz-modal>

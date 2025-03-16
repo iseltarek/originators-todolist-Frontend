@@ -11,6 +11,7 @@ import { CreateTaskComponent } from '../../todo/create-task/create-task.componen
 import { ModalService } from '../../../shared/modal.service';
 import { MaterialssModule } from '../../../shared/material.module';
 import { AlltasksComponent } from '../../todo/alltasks/alltasks.component';
+import { AntdModule } from '../../../shared/antD.module';
 import { TodoStateService } from '../../../Core/services/services/todo.state.service';
 
 @Component({
@@ -22,9 +23,10 @@ import { TodoStateService } from '../../../Core/services/services/todo.state.ser
     AlltasksComponent,
     SideNavComponent,
     DatePipe,
+    AntdModule,
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  styleUrl: './home.component.less',
 })
 export class HomeComponent implements OnInit {
   today: Date = new Date();
@@ -49,14 +51,13 @@ export class HomeComponent implements OnInit {
     this.modalService.closeModal();
   }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    if (this.isModalOpen && this.createTaskModal) {
-      const modalElement = this.createTaskModal.nativeElement;
-      if (!modalElement.contains(event.target as Node)) {
-        this.closeTaskModal();
-        this.todoStateService.taskToUpdate.next(null);
-      }
-    }
-  }
+  // @HostListener('document:click', ['$event'])
+  // onDocumentClick(event: MouseEvent) {
+  //   if (this.isModalOpen && this.createTaskModal) {
+  //     const modalElement = this.createTaskModal.nativeElement;
+  //     if (!modalElement.contains(event.target as Node)) {
+  //       this.closeTaskModal();
+  //     }
+  //   }
+  // }
 }

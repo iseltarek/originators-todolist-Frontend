@@ -5,6 +5,6 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-landing-page',
   imports: [RouterOutlet],
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.css',
+  styleUrl: './landing-page.component.less',
 })
 export class LandingPageComponent {}

@@ -17,12 +17,18 @@ import { Note } from '../../../shared/models/note.model';
 import { TodoService } from '../../../Core/services/services/todo.service';
 import { TodoStateService } from '../../../Core/services/services/todo.state.service';
 import { TaskTagsComponent } from '../task-tags/task-tags.component';
+import { AntdModule } from '../../../shared/antD.module';
 
 @Component({
   selector: 'app-create-task',
-  imports: [MaterialssModule, ReactiveFormsModule, TaskTagsComponent],
+  imports: [
+    MaterialssModule,
+    ReactiveFormsModule,
+    TaskTagsComponent,
+    AntdModule,
+  ],
   templateUrl: './create-task.component.html',
-  styleUrl: './create-task.component.css',
+  styleUrl: './create-task.component.less',
 })
 export class CreateTaskComponent implements OnInit {
   @Output() closeEvent = new EventEmitter<void>();

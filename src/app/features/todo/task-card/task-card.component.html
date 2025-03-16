@@ -1,54 +1,69 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>{{ task.title }}</mat-card-title>
-    <mat-card-subtitle>{{ task.status }}</mat-card-subtitle>
+<nz-card class="task-card">
+  <div class="task-header">
+    <h3>{{ task.title }}</h3>
     <div class="menu">
-      <div class="share">
-        <button class="share">
-          <mat-icon>share</mat-icon>
-        </button>
-      </div>
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>
+      <button nz-button nzType="text">
+        <nz-icon class="icon" nzType="share-alt" nzTheme="outline" />
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="changeStatus('in-progress')">
-          <span>In progress</span>
-        </button>
-        <button mat-menu-item (click)="changeStatus('Completed')">
-          <span>Completed</span>
-        </button>
-        <button mat-menu-item (click)="changeStatus('todo')">
-          <span>Todo</span>
-        </button>
-      </mat-menu>
+
+      <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+        <i class="icon" nz-icon nzType="more" nzTheme="outline"></i>
+      </a>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="changeStatus('in-progress')">
+            In Progress
+          </li>
+          <li nz-menu-item (click)="changeStatus('Completed')">Completed</li>
+
+          <li nz-menu-item (click)="changeStatus('todo')">Todo</li>
+        </ul>
+      </nz-dropdown-menu>
     </div>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="content">
-      <p>{{ task.description }}</p>
-    </div>
-  </mat-card-content>
-  <div class="progress">
-    <mat-progress-bar
-      mode="determinate"
-      [value]="getProgressValue()"
-    ></mat-progress-bar>
-    <span>{{ getProgressValue() + "%" }}</span>
   </div>
-  <mat-card-footer class="card-footer">
-    <mat-chip-set aria-label="Chihuahua traits">
-      <mat-chip *ngFor="let tag of task.tags">
-        {{ tag }}
-      </mat-chip>
-    </mat-chip-set>
-    <div class="control-btn">
-      <button class="control-btn" (click)="editTask()">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button class="control-btn" (click)="deleteTask()">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-  </mat-card-footer>
-</mat-card>
+  <div class="content">
+    <p>
+      {{ task.description }}
+      <a *ngIf="task.description.length >= 50" href="#">See More</a>
+    </p>
+  </div>
+
+  <div class="task-info">
+    <nz-avatar-group>
+      <nz-avatar
+        nzSrc="https://randomuser.me/api/portraits/women/1.jpg"
+      ></nz-avatar>
+      <nz-avatar
+        nzSrc="https://randomuser.me/api/portraits/men/2.jpg"
+      ></nz-avatar>
+      <nz-avatar
+        nzSrc="https://randomuser.me/api/portraits/women/3.jpg"
+      ></nz-avatar>
+      <nz-avatar nzText="+2"></nz-avatar>
+    </nz-avatar-group>
+
+    <button nz-button nzType="primary" class="invite-btn">
+      <nz-icon
+        nzType="plus-circle"
+        nzTheme="twotone"
+        nzTwotoneColor="#000000"
+      />
+
+      Invite
+    </button>
+  </div>
+
+  <nz-progress
+    [nzPercent]="getProgressValue()"
+    [nzStrokeColor]="'#d32f2f'"
+  ></nz-progress>
+
+  <div class="task-tags">
+    <nz-tag class="tag" *ngFor="let tag of task.tags" nzColor="#FFF1F0">{{
+      tag
+    }}</nz-tag>
+    <!-- <nz-tag nzColor="volcano">UI</nz-tag>
+    <nz-tag nzColor="magenta">UX</nz-tag>
+    <nz-tag nzColor="gold">FINISH</nz-tag> -->
+  </div>
+</nz-card>

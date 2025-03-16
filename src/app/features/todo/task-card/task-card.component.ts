@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
 import { TodoService } from '../../../Core/services/services/todo.service';
 import { Note } from '../../../shared/models/note.model';
 import { TodoStateService } from '../../../Core/services/services/todo.state.service';
+import { AntdModule } from '../../../shared/antD.module';
 import { ModalService } from '../../../shared/modal.service';
 
 @Component({
   selector: 'app-task-card',
-  imports: [MaterialssModule, CommonModule],
+  imports: [MaterialssModule, CommonModule, AntdModule],
   templateUrl: './task-card.component.html',
-  styleUrl: './task-card.component.css',
+  styleUrl: './task-card.component.less',
 })
 export class TaskCardComponent implements OnInit {
   chipMenu: MatMenuPanel<any> | null | undefined;
