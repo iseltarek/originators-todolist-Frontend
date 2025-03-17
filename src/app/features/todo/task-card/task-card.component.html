@@ -1,30 +1,54 @@
-<nz-card class="task-card">
-  <div class="task-header">
-    <h3>{{ task.title }}</h3>
-    <div class="menu">
-      <button nz-button nzType="text">
-        <nz-icon class="icon" nzType="share-alt" nzTheme="outline" />
-      </button>
+<nz-card class="task-card" (click)="openTaskDetails($event)">
+  <div class="header">
+    <div class="task-header">
+      <h3>{{ task.title }}</h3>
+      <div class="menu">
+        <button nz-button nzType="text">
+          <nz-icon class="icon" nzType="share-alt" nzTheme="outline" />
+        </button>
 
-      <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
-        <i class="icon" nz-icon nzType="more" nzTheme="outline"></i>
-      </a>
-      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+          <i class="icon" nz-icon nzType="more" nzTheme="outline"></i>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="deleteTask()">
+              <nz-icon nzType="delete" nzTheme="outline" /> Deleted
+            </li>
+            <li nz-menu-item (click)="editTask()">
+              <nz-icon nzType="edit" nzTheme="outline" /> Edit
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </div>
+    <div class="status">
+      <h5 nz-dropdown nzTrigger="click" [nzDropdownMenu]="statusMenu">
+        {{ task.status }}
+      </h5>
+      <nz-dropdown-menu #statusMenu="nzDropdownMenu">
         <ul nz-menu>
-          <li nz-menu-item (click)="deleteTask()">
-            <nz-icon nzType="delete" nzTheme="outline" /> Deleted
+          <li nz-menu-item (click)="changeStatus('todo')">Todo</li>
+          <li nz-menu-item (click)="changeStatus('in-progress')">
+            In Progress
           </li>
-          <li nz-menu-item (click)="editTask()">
-            <nz-icon nzType="edit" nzTheme="outline" /> Edit
-          </li>
+          <li nz-menu-item (click)="changeStatus('completed')">completed</li>
         </ul>
       </nz-dropdown-menu>
     </div>
   </div>
   <div class="content">
     <p>
-      {{ task.description }}
-      <a *ngIf="task.description.length >= 50" href="#">See More</a>
+      {{
+        task.description.length > 50
+          ? (task.description | slice : 0 : 50) + "..."
+          : task.description
+      }}
+      <a
+        *ngIf="task.description.length >= 50"
+        (click)="openTaskDetails($event); $event.stopPropagation()"
+        >See More</a
+      >
     </p>
   </div>
 

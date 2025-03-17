@@ -5,13 +5,17 @@ mat-chip-grid {
   overflow: hidden;
 }
 
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
 input {
   border: none;
   outline: none;
   width: auto;
   border: none;
   background-color: #d9d9d9;
-  /* padding: 0.5rem; */
   font-size: 1rem;
   display: table-cell;
 }
@@ -30,9 +34,12 @@ input:focus {
 .ant-input,
 .input {
   height: 4.5rem;
-  /* width: 25rem; */
   font-size: 1.6rem;
   border-radius: 1.6rem;
   border: 0.2rem solid #00000040;
   background-color: white;
+}
+.tag {
+  width: auto;
+  padding: 0.2rem;
 }

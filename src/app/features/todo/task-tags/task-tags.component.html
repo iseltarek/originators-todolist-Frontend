@@ -1,4 +1,4 @@
-<mat-chip-grid #taglist>
+<div class="container">
   <input
     nz-input
     placeholder="Add Tags"
@@ -6,16 +6,39 @@
     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
     (matChipInputTokenEnd)="add($event)"
   />
+  <mat-chip-grid #taglist>
+    <mat-chip-option
+      class="tag"
+      *ngFor="let Tag of tags"
+      [selectable]="selectable"
+      [removable]="removable"
+      (removed)="remove(Tag)"
+    >
+      {{ Tag }}
+
+      <button mat-icon-button (click)="remove(Tag); $event.stopPropagation()">
+        <nz-icon nzType="close-circle" nzTheme="outline"></nz-icon>
+      </button>
+    </mat-chip-option>
+    @if(errorMessage){
+    <span class="error-message">{{ errorMessage }}</span>
+    }
+  </mat-chip-grid>
+</div>
+
+<!-- <mat-chip-grid #taglist>
   <mat-chip-option
-    *ngFor="let Tag of tags"
+    *ngFor="let tag of tags"
     [selectable]="selectable"
     [removable]="removable"
-    (removed)="remove(Tag)"
+    (removed)="remove(tag)"
   >
-    {{ Tag }}
-    <nz-icon *ngIf="removable" nzType="close-circle" nzTheme="outline" />
+    {{ tag }}
+    <button mat-icon-button (click)="remove(tag); $event.stopPropagation()">
+      <nz-icon nzType="close-circle" nzTheme="outline"></nz-icon>
+    </button>
   </mat-chip-option>
   @if(errorMessage){
   <span class="error-message">{{ errorMessage }}</span>
-  }
-</mat-chip-grid>
+  }</mat-chip-grid
+> -->

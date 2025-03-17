@@ -6,6 +6,7 @@ import { TodoStateService } from '../../../Core/services/services/todo.state.ser
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../Core/services/services/auth.service.component';
+import { ModalService } from '../../../shared/modal.service';
 
 @Component({
   selector: 'app-alltasks',
@@ -23,7 +24,8 @@ export class AlltasksComponent implements OnInit {
   constructor(
     public todoService: TodoService,
     public todoStateService: TodoStateService,
-    public authnticationService: AuthService
+    public authnticationService: AuthService,
+    public modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -86,6 +88,7 @@ export class AlltasksComponent implements OnInit {
     this.todoStateService.setTask(null);
     this.todoStateService.deleteTask(null);
     this.todoStateService.updateTask(null);
+    this.modalService.resetSelectedTask();
   }
   // ngOnDestroy() {
   //   this.taskAddedSubscription?.unsubscribe();

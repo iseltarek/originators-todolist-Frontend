@@ -44,6 +44,11 @@
     </section>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
 <div #createTaskModal *ngIf="isModalOpen">
   <app-create-task (closeEvent)="closeTaskModal()"></app-create-task>
+</div>
+
+<div *ngIf="isSelectedOpen">
+  <app-task-details [taskDetailes]="selectedTask"></app-task-details>
 </div>

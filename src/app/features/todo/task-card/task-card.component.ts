@@ -15,7 +15,6 @@ import { ModalService } from '../../../shared/modal.service';
   styleUrl: './task-card.component.less',
 })
 export class TaskCardComponent implements OnInit {
-  chipMenu: MatMenuPanel<any> | null | undefined;
   @Input() task!: Note;
   @Output() DeleteNote = new EventEmitter<number>();
 
@@ -37,6 +36,11 @@ export class TaskCardComponent implements OnInit {
 
   changeStatus(status: string) {
     this.task.status = status;
+    this.todoService.updateTask(this.task.customId, this.task).subscribe({
+      next: (resulteTask) => {
+        this.todoStateService.updateTask(resulteTask);
+      },
+    });
   }
 
   deleteTask() {
@@ -54,5 +58,14 @@ export class TaskCardComponent implements OnInit {
         this.todoStateService.updateTask(resulteTask);
       },
     });
+  }
+  openTaskDetails(event: Event) {
+    const clickedElement = event.target as HTMLElement;
+
+    if (clickedElement.closest('.menu') || clickedElement.closest('.status')) {
+      return;
+    }
+    this.modalService.closeSelectedTaskModal();
+    this.modalService.openSelectedTaskModal(this.task as Note);
   }
 }

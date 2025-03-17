@@ -31,10 +31,7 @@
       </div>
     </div>
     <div class="image-container">
-      <img
-        src="https://s3-alpha-sig.figma.com/img/2107/44f0/a0cbce5cefd93c20a873290a079d9dee?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=SYLoSBwM7hjNeSTGN0kyXjH668uZYlsBWBpKJmDv8tbnviiv-J-5KpvUhDf~pfVGws8ImLOV-9H~NCycsH~Z0M95nNmSmlDWxoWz8BWzIbphFwoqj2Epo3yXrIga8Rhhxqd-iIDTzstODcpe-1owckPS6jzemwr2wTSBtClQSonjsIKZEn3xFHjWAnp8ksPWLA7uJs9zxd~aWXivtMeK2bSNfW5IxdAEmqGRa56ZW0qAfos-V2GgkjeXZgjozi1mrpPWVh6vEKgr7LiaoR8wy7cGzih3YSbQHoZvNDNSXVWd1L5X-ZCjmh3EshT7TOKOoq9t5p-7C6iHt1sqRBh~tg__"
-        alt="image"
-      />
+      <img src="/image.png" alt="image" />
     </div>
   </div>
   <ng-container *nzModalContent>
@@ -54,6 +51,31 @@
           formControlName="description"
           placeholder="Description"
         ></textarea>
+      </nz-form-item>
+
+      <nz-form-item class="item date">
+        <label><nz-icon nzType="carry-out" nzTheme="outline" />Status:</label>
+        <span
+          class="input"
+          nz-dropdown
+          nzTrigger="click"
+          [nzDropdownMenu]="statusMenu"
+        >
+          {{
+            taskForm.controls["status"].value
+              ? taskForm.controls["status"].value
+              : "Choose Status"
+          }}</span
+        >
+        <nz-dropdown-menu #statusMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="changeStatus('todo')">Todo</li>
+            <li nz-menu-item (click)="changeStatus('in-progress')">
+              In Progress
+            </li>
+            <li nz-menu-item (click)="changeStatus('completed')">completed</li>
+          </ul>
+        </nz-dropdown-menu>
       </nz-form-item>
 
       <nz-form-item class="item date">

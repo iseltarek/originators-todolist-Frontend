@@ -50,7 +50,7 @@ export class CreateTaskComponent implements OnInit {
       title: new FormControl<string>('', [Validators.required]),
       description: new FormControl<string>(''),
       date: new FormControl<Date | null>(null),
-      status: new FormControl<string>('todo'),
+      status: new FormControl<string>('', [Validators.required]),
     });
   }
 
@@ -67,9 +67,15 @@ export class CreateTaskComponent implements OnInit {
       this.isEditing = editing;
     });
   }
-
+  changeStatus(status: string) {
+    this.taskForm.controls['status'].setValue(status);
+  }
   createTask() {
     const task: Note = this.buildTaskObject();
+    if (!this.taskForm.valid) {
+      this.errorMessage = this.getErrorMessage(); // Get the first invalid field
+      return;
+    }
 
     const saveOperation = this.isEditing
       ? this.todoService.updateTask(this.updatedTaskId as number, task)
@@ -125,5 +131,16 @@ export class CreateTaskComponent implements OnInit {
       this.isEditing = true;
       this.updatedTaskId = taskToUpdate.customId;
     }
+  }
+
+  getErrorMessage(): string {
+    for (const controlName in this.taskForm.controls) {
+      const control = this.taskForm.get(controlName);
+
+      if (control && control.errors && control.touched) {
+        return `${controlName} is required`;
+      }
+    }
+    return '';
   }
 }
