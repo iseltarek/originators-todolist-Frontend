@@ -73,7 +73,7 @@ export class CreateTaskComponent implements OnInit {
   createTask() {
     const task: Note = this.buildTaskObject();
     if (!this.taskForm.valid) {
-      this.errorMessage = this.getErrorMessage(); // Get the first invalid field
+      this.errorMessage = this.getErrorMessage();
       return;
     }
 
@@ -101,6 +101,15 @@ export class CreateTaskComponent implements OnInit {
   }
   handleCancel() {
     this.modalService.closeModal();
+    this.modalService.resetSelectedTask();
+    this.todoStateService.setTask(null);
+    this.todoStateService.taskToUpdate.next(null);
+
+    this.taskForm.reset();
+    this.tags = [];
+    this.isEditing = false;
+    this.updatedTaskId = null;
+    this.errorMessage = '';
   }
   private handleSuccess(savedTask: Note): void {
     this.closeEvent.emit();
