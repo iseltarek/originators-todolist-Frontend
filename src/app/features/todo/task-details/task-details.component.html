@@ -1,0 +1,68 @@
+<nz-modal
+  [(nzVisible)]="taskDetailes"
+  (nzOnCancel)="closeModal()"
+  class="card"
+  nzTitle="Task Details"
+  nzWidth="70rem"
+  [nzClosable]="false"
+  [nzFooter]="null"
+  [nzStyle]="{
+    height: '40rem',
+    'border-radius': '10px',
+    'background-color': '#f8f9fa'
+  }"
+>
+  <div *nzModalTitle class="header">
+    <div class="board-container">
+      <div class="board-header">
+        <h2>Your Tracker</h2>
+        <div>
+          <button nz-button nzType="text">
+            <nz-icon
+              class="icon"
+              nzType="share-alt"
+              nzTheme="outline"
+            ></nz-icon>
+          </button>
+          <button (click)="closeModal()" nz-button nzType="text">
+            <nz-icon nzType="close-circle" nzTheme="outline" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="image-container">
+      <img src="/image.png" alt="image" />
+    </div>
+  </div>
+
+  <ng-container *nzModalContent class="container">
+    <div class="item">
+      <label><nz-icon nzType="edit" nzTheme="outline" /> Title:</label>
+      <p>{{ taskDetailes?.title }}</p>
+    </div>
+
+    <div class="item">
+      <label
+        ><nz-icon nzType="align-left" nzTheme="outline" />Description:</label
+      >
+      <p class="description">{{ taskDetailes?.description }}</p>
+    </div>
+
+    <div class="item">
+      <label><nz-icon nzType="calendar" nzTheme="outline" /> Date:</label>
+      <p>{{ taskDetailes?.createdAt | date : "MMMM d, y" }}</p>
+    </div>
+
+    <div class="item">
+      <label><nz-icon nzType="carry-out" nzTheme="outline" />Status:</label>
+      <p>{{ taskDetailes?.status }}</p>
+    </div>
+
+    <div class="item">
+      <label><nz-icon nzType="tag" nzTheme="outline" /> Tags:</label>
+      <mat-chip *ngFor="let Tag of taskDetailes?.tags">
+        {{ Tag }}
+      </mat-chip>
+    </div>
+  </ng-container>
+</nz-modal>

@@ -1,0 +1,64 @@
+.sidenav-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 0.5rem;
+  text-align: left;
+  margin-left: 20px;
+}
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.logo-container img {
+  width: 100px;
+  height: 2rem;
+}
+
+mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  align-content: baseline;
+}
+
+mat-nav-list a {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+mat-nav-list a mat-icon {
+  margin-right: 10px;
+}
+
+mat-action-list button {
+  width: 100%;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+mat-action-list button mat-icon {
+  margin-right: 10px;
+}
+
+mat-nav-list a:hover,
+mat-nav-list a.active,
+mat-nav-list button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}

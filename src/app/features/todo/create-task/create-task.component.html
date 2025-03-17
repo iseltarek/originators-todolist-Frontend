@@ -1,0 +1,100 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  class="card"
+  [nzFooter]="null"
+  nzWidth="70rem"
+  [nzClosable]="false"
+  [nzStyle]="{
+    height: '60rem',
+    'border-radius': '10px',
+    'background-color': '#f8f9fa'
+  }"
+>
+  <div *nzModalTitle class="header">
+    <div class="board-container">
+      <div class="board-header">
+        <h2>
+          {{ isEditing === true ? "Edit Your tracker " : "Create New Tracker" }}
+        </h2>
+        <div>
+          <button nz-button nzType="text">
+            <nz-icon
+              class="icon"
+              nzType="share-alt"
+              nzTheme="outline"
+            ></nz-icon>
+          </button>
+          <button (click)="handleCancel()" nz-button nzType="text">
+            <nz-icon nzType="close-circle" nzTheme="outline" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="image-container">
+      <img src="/image.png" alt="image" />
+    </div>
+  </div>
+  <ng-container *nzModalContent>
+    <form class="form" nz-form [formGroup]="taskForm" (ngSubmit)="createTask()">
+      <nz-form-item class="item">
+        <label><nz-icon nzType="edit" nzTheme="outline" /> Title:</label>
+        <input nz-input formControlName="title" placeholder="Add Title" />
+      </nz-form-item>
+
+      <nz-form-item class="item">
+        <label
+          ><nz-icon nzType="align-left" nzTheme="outline" />Description:</label
+        >
+
+        <textarea
+          nz-input
+          formControlName="description"
+          placeholder="Description"
+        ></textarea>
+      </nz-form-item>
+
+      <nz-form-item class="item date">
+        <label><nz-icon nzType="carry-out" nzTheme="outline" />Status:</label>
+        <span
+          class="input"
+          nz-dropdown
+          nzTrigger="click"
+          [nzDropdownMenu]="statusMenu"
+        >
+          {{
+            taskForm.controls["status"].value
+              ? taskForm.controls["status"].value
+              : "Choose Status"
+          }}</span
+        >
+        <nz-dropdown-menu #statusMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="changeStatus('todo')">Todo</li>
+            <li nz-menu-item (click)="changeStatus('in-progress')">
+              In Progress
+            </li>
+            <li nz-menu-item (click)="changeStatus('completed')">completed</li>
+          </ul>
+        </nz-dropdown-menu>
+      </nz-form-item>
+
+      <nz-form-item class="item date">
+        <label><nz-icon nzType="calendar" nzTheme="outline" /> Date:</label>
+        <nz-date-picker class="input" formControlName="date"></nz-date-picker>
+      </nz-form-item>
+
+      <nz-form-item class="item">
+        <label><nz-icon nzType="tag" nzTheme="outline" /> Tags:</label>
+        <app-task-tags [tags]="tags" (tagsUpdated)="updateTags($event)" />
+      </nz-form-item>
+
+      @if(errorMessage){
+      <span class="error-message">{{ errorMessage }}</span>
+      }
+
+      <div class="btn-container">
+        <button nz-button nzType="primary" class="btn">Add Tracker</button>
+      </div>
+    </form>
+  </ng-container>
+</nz-modal>

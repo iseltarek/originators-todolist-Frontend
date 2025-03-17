@@ -1,0 +1,54 @@
+<mat-sidenav-container class="home-container">
+  <mat-sidenav #sidenav mode="side" opened class="sidenav">
+    <app-side-nav />
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <header class="header">
+      <div class="header-actions">
+        <div class="search-bar">
+          <input nz-input type="text" placeholder="Search" />
+          <nz-icon nzType="search" nzTheme="outline" />
+        </div>
+
+        <div class="header-actions-right">
+          <nz-icon class="icon" nzType="calendar" nzTheme="outline" />
+          <span class="date">{{ today | date : "dMMM, y" }}</span>
+          <nz-icon class="icon" nzType="bell" nzTheme="fill" nzTheme="fill" />
+
+          <button mat-icon-button>
+            <nz-icon class="icon" nzType="smile" nzTheme="outline" />
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <h1>My Trackers</h1>
+
+    <section class="tasks">
+      <div class="task-header">
+        <span>Recent Trackers</span>
+        <button nz-button class="create-task-btn" (click)="createTask()">
+          <nz-icon
+            nzType="plus-circle"
+            nzTheme="twotone"
+            nzTwotoneColor="#A8071A"
+          />
+          Create Task
+        </button>
+      </div>
+
+      <div class="task-grid">
+        <app-alltasks />
+      </div>
+    </section>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div #createTaskModal *ngIf="isModalOpen">
+  <app-create-task (closeEvent)="closeTaskModal()"></app-create-task>
+</div>
+
+<div *ngIf="isSelectedOpen">
+  <app-task-details [taskDetailes]="selectedTask"></app-task-details>
+</div>

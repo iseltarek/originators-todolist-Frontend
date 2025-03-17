@@ -1,0 +1,44 @@
+<div class="container">
+  <input
+    nz-input
+    placeholder="Add Tags"
+    [matChipInputFor]="taglist"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+    (matChipInputTokenEnd)="add($event)"
+  />
+  <mat-chip-grid #taglist>
+    <mat-chip-option
+      class="tag"
+      *ngFor="let Tag of tags"
+      [selectable]="selectable"
+      [removable]="removable"
+      (removed)="remove(Tag)"
+    >
+      {{ Tag }}
+
+      <button mat-icon-button (click)="remove(Tag); $event.stopPropagation()">
+        <nz-icon nzType="close-circle" nzTheme="outline"></nz-icon>
+      </button>
+    </mat-chip-option>
+    @if(errorMessage){
+    <span class="error-message">{{ errorMessage }}</span>
+    }
+  </mat-chip-grid>
+</div>
+
+<!-- <mat-chip-grid #taglist>
+  <mat-chip-option
+    *ngFor="let tag of tags"
+    [selectable]="selectable"
+    [removable]="removable"
+    (removed)="remove(tag)"
+  >
+    {{ tag }}
+    <button mat-icon-button (click)="remove(tag); $event.stopPropagation()">
+      <nz-icon nzType="close-circle" nzTheme="outline"></nz-icon>
+    </button>
+  </mat-chip-option>
+  @if(errorMessage){
+  <span class="error-message">{{ errorMessage }}</span>
+  }</mat-chip-grid
+> -->
