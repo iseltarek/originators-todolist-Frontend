@@ -1,5 +1,74 @@
-<app-auth-form
-  formType="login"
-  (formSubmit)="login($event)"
-  [errorMessage]="errorMessage()"
-></app-auth-form>
+<div class="auth-container">
+  <form nz-form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="header">
+      <h2>Log In</h2>
+      <h4>Welcome Back!</h4>
+    </div>
+    <nz-form-item class="item">
+      <mat-label class="label">Email</mat-label>
+      <nz-input-group class="input" nzPrefixIcon="mail">
+        <input
+          nz-input
+          type="text"
+          formControlName="email"
+          placeholder="Email"
+        />
+      </nz-input-group>
+    </nz-form-item>
+
+    <nz-form-item class="item">
+      <mat-label class="label">Password</mat-label>
+      <nz-input-group class="input" nzPrefixIcon="eye">
+        <input
+          nz-input
+          type="text"
+          formControlName="password"
+          placeholder="Password"
+        />
+      </nz-input-group>
+    </nz-form-item>
+
+    @if(errorMessage){
+    <mat-error>
+      {{ errorMessage }}
+    </mat-error>
+    }
+
+    <div nz-row class="login-form-margin">
+      <div nz-col [nzSpan]="12">
+        <label nz-checkbox>
+          <span>Remember me</span>
+        </label>
+      </div>
+      <div nz-col [nzSpan]="12">
+        <a class="login-form-forgot">Forgot password</a>
+      </div>
+    </div>
+
+    <div class="btn">
+      <button nz-button>Login</button>
+    </div>
+
+    <div class="with">
+      <div class="divider">
+        <span>Or Log In With</span>
+      </div>
+
+      <div class="social-login-icons">
+        <button class="icon">
+          <nz-icon nzType="google-circle" nzTheme="fill" />
+          Google
+        </button>
+        <button class="icon">
+          <nz-icon nzType="facebook" nzTheme="fill" />
+          Facebook
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="switch-auth">
+    <span> Don't have an account? </span>
+    <button (click)="navigateToSignup()">SignUp</button>
+  </div>
+</div>
