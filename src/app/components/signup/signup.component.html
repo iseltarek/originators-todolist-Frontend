@@ -1,5 +1,98 @@
-<app-auth-form
+<!-- <app-auth-form
   formType="signup"
   (formSubmit)="signup($event)"
   [errorMessage]="errorMessage()"
-></app-auth-form>
+></app-auth-form> -->
+
+<div class="auth-container">
+  <form nz-form (ngSubmit)="signUp()" [formGroup]="signUpForm">
+    <div class="header">
+      <h2>Sign Up</h2>
+      <h4>Welcome To Originator Tracker</h4>
+    </div>
+
+    <nz-form-item class="item">
+      <mat-label class="label">Email</mat-label>
+      <nz-input-group class="input" nzPrefixIcon="mail">
+        <input
+          nz-input
+          type="text"
+          formControlName="email"
+          placeholder="Email"
+        />
+      </nz-input-group>
+      <mat-error>{{ getErrorMessage("email") }}</mat-error>
+    </nz-form-item>
+
+    <nz-form-item class="item">
+      <mat-label class="label">User Name</mat-label>
+      <nz-input-group nzPrefixIcon="user">
+        <input
+          nz-input
+          type="text"
+          formControlName="name"
+          placeholder="User name"
+        />
+      </nz-input-group>
+      <mat-error>{{ getErrorMessage("name") }}</mat-error>
+    </nz-form-item>
+
+    <nz-form-item class="item">
+      <mat-label class="label">Password</mat-label>
+      <nz-input-group class="input" nzPrefixIcon="eye">
+        <input
+          nz-input
+          type="text"
+          formControlName="password"
+          placeholder="Password"
+        />
+      </nz-input-group>
+      <mat-error>{{ getErrorMessage("password") }}</mat-error>
+    </nz-form-item>
+
+    <nz-form-item class="item">
+      <mat-label class="label">Confirm Password</mat-label>
+      <nz-input-group class="input" nzPrefixIcon="eye">
+        <input
+          nz-input
+          type="text"
+          formControlName="confirmPassword"
+          placeholder="confirm Password"
+        />
+      </nz-input-group>
+      <mat-error>{{ getErrorMessage("confirmPassword") }}</mat-error>
+    </nz-form-item>
+
+    @if(errorMessage){
+    <mat-error>
+      {{ errorMessage }}
+    </mat-error>
+    }
+
+    <div class="btn">
+      <button nz-button>Sign Up</button>
+    </div>
+
+    <div class="with">
+      <div class="divider">
+        <span>Or Sign Up With</span>
+      </div>
+
+      <div class="social-login-icons">
+        <button class="icon">
+          <nz-icon nzType="google-circle" nzTheme="fill" />
+          Google
+        </button>
+        <button class="icon">
+          <nz-icon nzType="facebook" nzTheme="fill" />
+          Facebook
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="switch-auth">
+    <span> Already have an account? </span>
+    <button (click)="navigateToLogin()">Login</button>
+  </div>
+</div>
