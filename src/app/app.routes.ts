@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
-import { SignupComponent } from './features/components/signup/signup.component';
-import { LoginComponent } from './features/components/login/login.component';
-import { HomeComponent } from './features/pages/home/home.component';
-import { AuthGuard } from './Core/services/gurds/auth.guard';
-import { LandingPageComponent } from './features/pages/landing-page/landing-page.component';
+
+import { HomeComponent } from './pages/home/home.component';
+import { AuthGuard } from './gurds/auth.guard';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 export const routes: Routes = [
   {
