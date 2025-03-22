@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AntdModule } from './shared/antD.module';
+import { AntdModule } from './modules/antd.module';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

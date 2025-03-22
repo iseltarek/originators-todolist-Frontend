@@ -1,0 +1,44 @@
+@import "../../../styles.less";
+
+section {
+  display: flex;
+  height: 100vh;
+  background-color: @background-color;
+}
+
+.left-section {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.logo-container {
+  position: absolute;
+  top: -3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.logo-container img {
+  width: 20rem;
+  height: 20rem;
+  transform: rotate(7.44deg);
+  flex-shrink: 0;
+}
+
+.right-section {
+  width: 50%;
+  background-color: @background-color-secondary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+// .right-section img {
+//   max-width: 80%;
+//   height: auto;
+// }
