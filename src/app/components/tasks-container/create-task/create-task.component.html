@@ -2,13 +2,10 @@
   [(nzVisible)]="isVisible"
   class="card"
   [nzFooter]="null"
-  nzWidth="70rem"
   [nzClosable]="false"
-  [nzStyle]="{
-    height: '60rem',
-    'border-radius': '10px',
-    'background-color': '#f8f9fa'
-  }"
+  [nzWidth]="'60%'"
+  [nzStyle]="{ top: '10vh', borderRadius: '12px' }"
+  [nzBodyStyle]="{ maxHeight: '100vh' }"
 >
   <div *nzModalTitle class="header">
     <div class="board-container">
@@ -16,7 +13,7 @@
         <h2>
           {{ isEditing === true ? "Edit Your tracker " : "Create New Tracker" }}
         </h2>
-        <div>
+        <div class="btns">
           <button nz-button nzType="text">
             <nz-icon
               class="icon"
@@ -31,7 +28,7 @@
       </div>
     </div>
     <div class="image-container">
-      <img src="/image.png" alt="image" />
+      <img src="Task.png" alt="image" />
     </div>
   </div>
   <ng-container *nzModalContent>
@@ -80,7 +77,10 @@
 
       <nz-form-item class="item date">
         <label><nz-icon nzType="calendar" nzTheme="outline" /> Date:</label>
-        <nz-date-picker class="input" formControlName="date"></nz-date-picker>
+        <nz-range-picker
+          [nzShowTime]="true"
+          formControlName="date"
+        ></nz-range-picker>
       </nz-form-item>
 
       <nz-form-item class="item">

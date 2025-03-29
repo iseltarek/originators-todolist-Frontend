@@ -1,9 +1,3 @@
-<!-- <app-auth-form
-  formType="signup"
-  (formSubmit)="signup($event)"
-  [errorMessage]="errorMessage()"
-></app-auth-form> -->
-
 <div class="auth-container">
   <form nz-form (ngSubmit)="signUp()" [formGroup]="signUpForm">
     <div class="header">
@@ -11,88 +5,111 @@
       <h4>Welcome To Originator Tracker</h4>
     </div>
 
-    <nz-form-item class="item">
-      <mat-label class="label">Email</mat-label>
-      <nz-input-group class="input" nzPrefixIcon="mail">
-        <input
-          nz-input
-          type="text"
-          formControlName="email"
-          placeholder="Email"
-        />
-      </nz-input-group>
-      <mat-error>{{ getErrorMessage("email") }}</mat-error>
-    </nz-form-item>
+    <nz-row nzGutter="16">
+      <nz-col nzSpan="24">
+        <nz-form-item class="item">
+          <mat-label class="label">Email</mat-label>
+          <nz-input-group class="input" nzPrefixIcon="mail">
+            <input
+              nz-input
+              type="text"
+              formControlName="email"
+              placeholder="Email"
+            />
+          </nz-input-group>
+          <mat-error>{{ getErrorMessage("email") }}</mat-error>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
 
-    <nz-form-item class="item">
-      <mat-label class="label">User Name</mat-label>
-      <nz-input-group nzPrefixIcon="user">
-        <input
-          nz-input
-          type="text"
-          formControlName="name"
-          placeholder="User name"
-        />
-      </nz-input-group>
-      <mat-error>{{ getErrorMessage("name") }}</mat-error>
-    </nz-form-item>
+    <nz-row nzGutter="16">
+      <nz-col nzSpan="24">
+        <nz-form-item class="item">
+          <mat-label class="label">User Name</mat-label>
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              nz-input
+              type="text"
+              formControlName="name"
+              placeholder="User name"
+            />
+          </nz-input-group>
+          <mat-error>{{ getErrorMessage("name") }}</mat-error>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
 
-    <nz-form-item class="item">
-      <mat-label class="label">Password</mat-label>
-      <nz-input-group class="input" nzPrefixIcon="eye">
-        <input
-          nz-input
-          type="text"
-          formControlName="password"
-          placeholder="Password"
-        />
-      </nz-input-group>
-      <mat-error>{{ getErrorMessage("password") }}</mat-error>
-    </nz-form-item>
+    <nz-row nzGutter="16">
+      <nz-col nzSpan="24">
+        <nz-form-item class="item">
+          <mat-label class="label">Password</mat-label>
+          <nz-input-group class="input" nzPrefixIcon="eye">
+            <input
+              nz-input
+              type="password"
+              formControlName="password"
+              placeholder="Password"
+            />
+          </nz-input-group>
+          <mat-error>{{ getErrorMessage("password") }}</mat-error>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
 
-    <nz-form-item class="item">
-      <mat-label class="label">Confirm Password</mat-label>
-      <nz-input-group class="input" nzPrefixIcon="eye">
-        <input
-          nz-input
-          type="text"
-          formControlName="confirmPassword"
-          placeholder="confirm Password"
-        />
-      </nz-input-group>
-      <mat-error>{{ getErrorMessage("confirmPassword") }}</mat-error>
-    </nz-form-item>
+    <nz-row nzGutter="16">
+      <nz-col nzSpan="24">
+        <nz-form-item class="item">
+          <mat-label class="label">Confirm Password</mat-label>
+          <nz-input-group class="input" nzPrefixIcon="eye">
+            <input
+              nz-input
+              type="password"
+              formControlName="confirmPassword"
+              placeholder="Confirm Password"
+            />
+          </nz-input-group>
+          <mat-error>{{ getErrorMessage("confirmPassword") }}</mat-error>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
 
     @if(errorMessage){
-    <mat-error>
+    <mat-error class="error-message">
       {{ errorMessage }}
     </mat-error>
     }
 
-    <div class="btn">
-      <button nz-button>Sign Up</button>
-    </div>
+    <nz-row nzJustify="center">
+      <nz-col nzSpan="24">
+        <button nz-button class="signup-btn">Sign Up</button>
+      </nz-col>
+    </nz-row>
 
+    <!-- Social Signup -->
     <div class="with">
       <div class="divider">
         <span>Or Sign Up With</span>
       </div>
 
-      <div class="social-login-icons">
-        <button class="icon">
-          <nz-icon nzType="google-circle" nzTheme="fill" />
-          Google
-        </button>
-        <button class="icon">
-          <nz-icon nzType="facebook" nzTheme="fill" />
-          Facebook
-        </button>
-      </div>
+      <nz-row nzGutter="16" nzJustify="center">
+        <nz-col nzSpan="12">
+          <button class="icon">
+            <nz-icon nzType="google-circle" nzTheme="fill" />
+            Google
+          </button>
+        </nz-col>
+        <nz-col nzSpan="12">
+          <button class="icon">
+            <nz-icon nzType="facebook" nzTheme="fill" />
+            Facebook
+          </button>
+        </nz-col>
+      </nz-row>
     </div>
   </form>
 
   <div class="switch-auth">
-    <span> Already have an account? </span>
+    <span>Already have an account?</span>
     <button (click)="navigateToLogin()">Login</button>
   </div>
 </div>

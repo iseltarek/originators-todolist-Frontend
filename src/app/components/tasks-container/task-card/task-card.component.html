@@ -18,11 +18,19 @@
             <li nz-menu-item (click)="editTask()">
               <nz-icon nzType="edit" nzTheme="outline" /> Edit
             </li>
+            <li nz-menu-item>
+              <label
+                nz-checkbox
+                [(nzChecked)]="isChecked"
+                (nzCheckedChange)="onCheckboxChange($event)"
+                >select</label
+              >
+            </li>
           </ul>
         </nz-dropdown-menu>
       </div>
     </div>
-    <div class="status">
+    <!-- <div class="status">
       <h5 nz-dropdown nzTrigger="click" [nzDropdownMenu]="statusMenu">
         {{ task.status }}
       </h5>
@@ -35,7 +43,7 @@
           <li nz-menu-item (click)="changeStatus('completed')">completed</li>
         </ul>
       </nz-dropdown-menu>
-    </div>
+    </div> -->
   </div>
   <div class="content">
     <p>
@@ -53,18 +61,7 @@
   </div>
 
   <div class="task-info">
-    <nz-avatar-group>
-      <nz-avatar
-        nzSrc="https://randomuser.me/api/portraits/women/1.jpg"
-      ></nz-avatar>
-      <nz-avatar
-        nzSrc="https://randomuser.me/api/portraits/men/2.jpg"
-      ></nz-avatar>
-      <nz-avatar
-        nzSrc="https://randomuser.me/api/portraits/women/3.jpg"
-      ></nz-avatar>
-      <nz-avatar nzText="+2"></nz-avatar>
-    </nz-avatar-group>
+    <nz-avatar-group> </nz-avatar-group>
 
     <button nz-button nzType="primary" class="invite-btn">
       <nz-icon

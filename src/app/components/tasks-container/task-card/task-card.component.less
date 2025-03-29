@@ -1,12 +1,30 @@
 @import "../../../../styles.less";
 
 .task-card {
-  width: 35rem;
-  height: 27.8rem;
+  min-width: 30rem;
+  height: 20rem;
   background-color: @background-color;
   border-radius: 1.5rem;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+@media (min-width: 1600px) {
+  .task-card {
+    min-width: 35rem;
+    height: 26rem;
+  }
+  .task-header {
+    height: 2.5rem;
+  }
+  .invite-btn {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 768px) {
+  .task-card {
+    min-width: 30rem;
+    height: 20rem;
+  }
 }
 .task-card:hover {
   transform: translateY(-5px);
@@ -16,7 +34,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 2rem;
+  height: 1.5rem;
 }
 .task-header button {
   background-color: @background-color;
@@ -43,6 +61,7 @@
   border-radius: 1rem;
   padding: 0.5rem;
   gap: 0.5rem;
+  font-size: 1.3rem;
 }
 .task-tags {
   color: @text-color;
@@ -54,9 +73,7 @@
   padding: 0.8rem;
   border-radius: 1rem;
 }
-mat-card-subtitle {
-  color: orangered;
-}
+
 .menu {
   display: flex;
   flex-direction: row;
@@ -69,36 +86,14 @@ mat-card-subtitle {
   cursor: pointer;
 }
 
-mat-card-content {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  overflow: hidden;
-  flex-grow: 1;
-}
-
 .progress {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin: 1rem;
 }
-
-mat-card-footer {
-  margin: 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
 .control-btn {
   background-color: #d9d9d9;
   border: none;
   cursor: pointer;
-}
-
-.status h5 {
-  font-size: 1.6rem;
-  color: @primary-color;
-  margin: 0;
 }

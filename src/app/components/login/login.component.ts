@@ -3,7 +3,6 @@ import { AuthService } from '../../services/auth.service.component';
 import { Router, RouterLink } from '@angular/router';
 import { AuthGuard } from '../../gurds/auth.guard';
 import { User } from '../../models/user.model';
-import { AuthFormComponent } from '../auth-form/auth-form.component';
 import { AntdModule } from '../../modules/antd.module';
 import { MaterialssModule } from '../../modules/material.module';
 import {

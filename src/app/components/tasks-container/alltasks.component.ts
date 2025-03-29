@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TodoService } from '../../services/todo.service';
 import { TaskCardComponent } from './task-card/task-card.component';
 import { Note } from '../../models/note.model';
@@ -19,8 +19,10 @@ export class AlltasksComponent implements OnInit {
   taskAddedSubscription: Subscription | undefined;
   taskDeletedSubscription: Subscription | undefined;
   taskUpdatedSubscription: Subscription | undefined;
+  manyTasksDeleteSubscription: Subscription | undefined;
   logoutSubscription: Subscription | undefined;
 
+  @Output() selectedTasks = new EventEmitter<number>();
   constructor(
     public todoService: TodoService,
     public todoStateService: TodoStateService,
@@ -36,6 +38,9 @@ export class AlltasksComponent implements OnInit {
         }
       },
     });
+    this.updateTask();
+    this.deleteTask();
+    this.addTask();
     this.loadTasks();
   }
 
@@ -78,6 +83,10 @@ export class AlltasksComponent implements OnInit {
           }
         }
       });
+  }
+
+  addselectedTasks(taskId: number): void {
+    this.selectedTasks.emit(taskId);
   }
 
   resetTasks() {

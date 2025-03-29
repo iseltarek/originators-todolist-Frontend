@@ -1,4 +1,123 @@
-<mat-sidenav-container class="home-container">
+<nz-layout class="home">
+  <nz-sider
+    [nzWidth]="250"
+    [nzCollapsedWidth]="110"
+    [(nzCollapsed)]="isCollapsed"
+    [nzCollapsible]="true"
+    style="height: 100vh; overflow: none"
+  >
+    <app-side-nav [isCollapsed]="isCollapsed" />
+  </nz-sider>
+  <nz-layout class="main">
+    <nz-header>
+      <div class="search-bar">
+        <input nz-input type="text" placeholder="Search" />
+        <!-- <nz-icon nzType="search" nzTheme="outline" /> -->
+      </div>
+
+      <div class="header-actions-right">
+        <div class="date" nz-dropdown nzTrigger="click">
+          <nz-icon class="icon" nzType="calendar" nzTheme="outline"> </nz-icon>
+        </div>
+
+        <span class="date">{{ date | date : "dMMM, y" }}</span>
+        <nz-icon class="icon" nzType="bell" nzTheme="fill" nzTheme="fill" />
+
+        <button nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+          <nz-avatar nzSize="large" nzIcon="user"></nz-avatar>
+        </button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item>
+              <nz-icon nzType="setting"></nz-icon>
+              <span> Settings</span>
+            </li>
+            <li nz-menu-item (click)="logout()">
+              <nz-icon nzType="logout"></nz-icon>
+              <span> Logout</span>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </nz-header>
+
+    <nz-content>
+      <app-board />
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+
+<div #createTaskModal *ngIf="isModalOpen">
+  <app-create-task (closeEvent)="closeTaskModal()"></app-create-task>
+</div>
+
+<div *ngIf="isSelectedOpen">
+  <app-task-details [taskDetailes]="selectedTask"></app-task-details>
+</div>
+<!-- <main>
+  <div class="sidenav" nz-row>
+    <nz-sider
+      nz-col
+      nzSpan="3"
+      nzCollapsible
+      [(nzCollapsed)]="isCollapsed"
+      [nzTrigger]="null"
+    >
+      <app-side-nav />
+    </nz-sider>
+  </div>
+
+  <div class="header">
+    <nz-header>
+      <div class="header-actions">
+        <div class="search-bar">
+          <input nz-input type="text" placeholder="Search" />
+          <nz-icon nzType="search" nzTheme="outline" />
+        </div>
+
+        <div class="header-actions-right">
+          <nz-icon class="icon" nzType="calendar" nzTheme="outline" />
+          <span class="date">{{ today | date : "dMMM, y" }}</span>
+          <nz-icon class="icon" nzType="bell" nzTheme="fill" nzTheme="fill" />
+
+          <button mat-icon-button>
+            <nz-icon class="icon" nzType="smile" nzTheme="outline" />
+          </button>
+        </div>
+      </div>
+    </nz-header>
+  </div>
+
+  <div class="content">
+    <h1>My Trackers</h1>
+    <section class="tasks">
+      <div class="task-header">
+        <span>Recent Trackers</span>
+        <button nz-button class="create-task-btn" (click)="createTask()">
+          <nz-icon
+            nzType="plus-circle"
+            nzTheme="twotone"
+            nzTwotoneColor="#A8071A"
+          />
+          Create Task
+        </button>
+      </div>
+
+      <div class="task-grid">
+        <app-alltasks />
+      </div>
+    </section>
+  </div>
+</main>
+<div #createTaskModal *ngIf="isModalOpen">
+  <app-create-task (closeEvent)="closeTaskModal()"></app-create-task>
+</div>
+
+<div *ngIf="isSelectedOpen">
+  <app-task-details [taskDetailes]="selectedTask"></app-task-details>
+</div> -->
+
+<!-- <mat-sidenav-container class="home-container">
   <mat-sidenav #sidenav mode="side" opened class="sidenav">
     <app-side-nav />
   </mat-sidenav>
@@ -51,4 +170,4 @@
 
 <div *ngIf="isSelectedOpen">
   <app-task-details [taskDetailes]="selectedTask"></app-task-details>
-</div>
+</div> -->
