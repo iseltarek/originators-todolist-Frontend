@@ -1,4 +1,4 @@
-<div class="auth-container">
+<!-- <div class="auth-container">
   <form nz-form [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="header">
       <h2>Log In</h2>
@@ -70,5 +70,95 @@
   <div class="switch-auth">
     <span> Don't have an account? </span>
     <button (click)="navigateToSignup()">SignUp</button>
+  </div>
+</div> -->
+
+<div class="auth-container">
+  <form nz-form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="header">
+      <h2>Log In</h2>
+      <h4>Welcome Back!</h4>
+    </div>
+    <nz-row nzGutter="16">
+      <nz-col nzSpan="24">
+        <nz-form-item class="item">
+          <mat-label class="label">Email</mat-label>
+          <nz-input-group class="input" nzPrefixIcon="mail">
+            <input
+              nz-input
+              type="email"
+              formControlName="email"
+              placeholder="Email"
+            />
+          </nz-input-group>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+
+    <nz-row nzGutter="16">
+      <nz-col nzSpan="24">
+        <nz-form-item class="item">
+          <mat-label class="label">Password</mat-label>
+          <nz-input-group class="input" nzPrefixIcon="eye">
+            <input
+              nz-input
+              type="password"
+              formControlName="password"
+              placeholder="Password"
+            />
+          </nz-input-group>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+
+    @if(errorMessage) {
+    <mat-error class="error-message">
+      {{ errorMessage }}
+    </mat-error>
+    }
+
+    <nz-row class="login-options">
+      <nz-col nzXs="24" nzSm="12">
+        <label nz-checkbox>
+          <span>Remember me</span>
+        </label>
+      </nz-col>
+      <nz-col nzXs="24" nzSm="12" class="forgot-password">
+        <a class="login-form-forgot">Forgot password?</a>
+      </nz-col>
+    </nz-row>
+
+    <nz-row nzJustify="center">
+      <nz-col nzSpan="24">
+        <button nz-button class="login-btn">Login</button>
+      </nz-col>
+    </nz-row>
+
+    <!-- Social Login -->
+    <div class="with">
+      <div class="divider">
+        <span>Or Log In With</span>
+      </div>
+
+      <nz-row nzGutter="16" nzJustify="center">
+        <nz-col nzSpan="12">
+          <button class="icon">
+            <nz-icon nzType="google-circle" nzTheme="fill" />
+            Google
+          </button>
+        </nz-col>
+        <nz-col nzSpan="12">
+          <button class="icon">
+            <nz-icon nzType="facebook" nzTheme="fill" />
+            Facebook
+          </button>
+        </nz-col>
+      </nz-row>
+    </div>
+  </form>
+
+  <div class="switch-auth">
+    <span>Don't have an account?</span>
+    <button (click)="navigateToSignup()">Sign Up</button>
   </div>
 </div>

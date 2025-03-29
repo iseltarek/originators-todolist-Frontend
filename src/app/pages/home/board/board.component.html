@@ -1,0 +1,31 @@
+<div class="content">
+  <h2>My Trackers</h2>
+  <section class="tasks">
+    <div class="task-header">
+      <div class="selected">
+        <span>Recent Trackers</span>
+        <span>Trackers selected ({{ selectedTasksLength$ | async }})</span>
+        <button
+          nz-button
+          class="delete-btn"
+          *ngIf="(selectedTasksLength$ | async) !== 0"
+          (click)="deleteSelectedTasks()"
+        >
+          <nz-icon nzType="delete"> </nz-icon>
+        </button>
+      </div>
+      <button nz-button class="create-task-btn" (click)="createTask()">
+        <nz-icon
+          nzType="plus-circle"
+          nzTheme="twotone"
+          nzTwotoneColor="#A8071A"
+        />
+        Create Tracker
+      </button>
+    </div>
+
+    <div class="task-grid">
+      <app-alltasks />
+    </div>
+  </section>
+</div>

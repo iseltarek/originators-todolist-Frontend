@@ -19,31 +19,40 @@ import { TodoStateService } from '../../services/todo.state.service';
 import { Subscription } from 'rxjs';
 import { Note } from '../../models/note.model';
 import { TaskDetailsComponent } from '../../components/tasks-container/task-details/task-details.component';
+import { BoardComponent } from './board/board.component';
+import { AuthService } from '../../services/auth.service.component';
 
 @Component({
   selector: 'app-home',
   imports: [
     CreateTaskComponent,
     CommonModule,
-    MaterialssModule,
-    AlltasksComponent,
     SideNavComponent,
     DatePipe,
     AntdModule,
     TaskDetailsComponent,
+    AntdModule,
+    BoardComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less',
 })
 export class HomeComponent implements OnInit {
-  today: Date = new Date();
+  onDateChange($event: Event) {
+    throw new Error('Method not implemented.');
+  }
+  date: Date = new Date();
   isModalOpen = false;
   modalSubscription!: Subscription;
   isSelectedOpen = false;
   selectedTask: Note | null = null;
   private taskSubscription!: Subscription;
+  isCollapsed = false;
 
-  constructor(public modalService: ModalService) {}
+  constructor(
+    public modalService: ModalService,
+    public authenticationService: AuthService
+  ) {}
 
   ngOnInit() {
     this.modalSubscription = this.modalService.isModalVisible$.subscribe(
@@ -63,11 +72,9 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
-  createTask() {
-    this.modalService.openModal();
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
   }
-
   closeTaskModal() {
     this.modalService.closeModal();
   }
@@ -76,7 +83,9 @@ export class HomeComponent implements OnInit {
     this.modalSubscription.unsubscribe();
     this.taskSubscription.unsubscribe();
   }
-
+  logout() {
+    this.authenticationService.logout();
+  }
   @ViewChild('createTaskModal', { static: false }) createTaskModal!: ElementRef;
   // @HostListener('document:click', ['$event'])
   // onDocumentClick(event: MouseEvent) {

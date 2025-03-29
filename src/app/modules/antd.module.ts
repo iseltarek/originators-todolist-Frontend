@@ -16,9 +16,10 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 @NgModule({
   imports: [
+    NzPopoverModule,
     NzDatePickerModule,
     NzDropDownModule,
     NzCardModule,
@@ -37,6 +38,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     NzModalModule,
   ],
   exports: [
+    NzPopoverModule,
     NzDatePickerModule,
     NzDropDownModule,
     NzCardModule,

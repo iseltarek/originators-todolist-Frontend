@@ -1,143 +1,148 @@
 @import "../../../../styles.less";
 
-.nz-layout {
-  margin: 0;
-  padding: 0;
-  background-color: #f5f5f5 !important;
-  padding: 1rem;
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: @text-color;
-}
 .logo {
   width: auto;
   height: auto;
   text-align: center;
-  background-color: #f5f5f5;
-}
-.logo img {
-  width: 20rem;
-  height: 20rem;
-}
+  .main {
+    width: 20rem;
+    height: 15rem;
+    transition: all 0.3s ease-in-out;
+  }
 
+  .sub {
+    width: 8rem;
+    height: 8rem;
+    transition: all 0.3s ease-in-out;
+  }
+}
 .content {
-  background-color: #f5f5f5;
-  color: @text-color;
-  font-size: 1.6rem;
-  font-weight: 500;
+  background: @background-color-secondary;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 3rem;
+  padding-left: 3rem;
+  padding-right: 1.7rem;
+  height: 100%;
 }
-
-button {
-  background-color: #f5f5f5;
-  border: none;
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: @text-color;
-}
-
 .main-menu-item {
-  background-color: #f5f5f5;
+  background: @background-color-secondary;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  .sub-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    a {
+      color: @text-color;
+      font-size: 1.4rem;
+    }
+  }
 }
-.btn-cont {
+.btn-container {
+  height: 4rem;
+  width: auto;
   display: flex;
   flex-direction: row;
+  background-color: @primary-color;
+  text-align: center;
+  color: white;
+  border-radius: 0.8rem;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  background-color: @primary-color;
-  width: 23rem;
-  height: 4rem;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: white;
-  text-align: center;
-  border-radius: 2rem;
-}
-.btn-cont button {
-  color: white;
-}
-.main-menu-item button {
-  background-color: @primary-color;
-  font-size: 1.8rem;
-  font-weight: 700;
-}
-span {
-  width: 2.2rem;
-  height: 2.2rem;
-}
-.sub-menu {
-  margin-left: 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  margin-top: 2rem;
-}
-.sub-menu a {
-  color: @text-color;
-  height: 2.4rem;
+  button {
+    background-color: @primary-color;
+    border: none;
+    color: white;
+  }
 }
 .sidebar-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: #f5f5f5 !important;
-  padding-left: 5rem;
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: @text-color;
+  background: @background-color-secondary;
 }
-.logout {
-  margin-top: 2rem;
-  background: #f5f5f5;
+
+@media (min-width: 1600px) {
+  .logo .main {
+    width: 25rem;
+    height: 25rem;
+  }
+
+  .logo .sub {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .content {
+    padding-left: 4rem;
+    padding-right: 3rem;
+    gap: 9rem;
+  }
+
+  .btn-container {
+    height: 5rem;
+    font-size: 2.2rem;
+  }
+  .sub-menu {
+    margin-top: 2rem;
+    gap: 4rem;
+  }
+
+  .main-menu-item .sub-menu a {
+    font-size: 2.2rem;
+  }
+  .sidebar-menu {
+    font-size: 2.2rem;
+  }
 }
-// .sidebar-menu {
-//   padding-left: 2rem;
-//   background: #f5f5f5 !important;
-// }
-//   text-align: center;
-// }
-// .sub-menu a {
-//   display: flex;
-//   align-items: center;
-//   text-decoration: none;
-// }
-// .main-menu-item {
-//   background-color: #f5f5f5;
-// }
-// .sub-menu {
-//   padding-left: 20px;
-//   position: relative;
-// }
 
-// .sub-menu li {
-//   position: relative;
-//   padding-left: 20px;
-// }
+@media (max-width: 1024px) {
+  .logo .main {
+    width: 15rem;
+    height: 12rem;
+  }
 
-// .sub-menu li::before {
-//   content: "";
-//   position: absolute;
-//   left: 0;
-//   top: 0;
-//   bottom: 0;
-//   width: 1px;
-//   background-color: #ccc;
-// }
+  .logo .sub {
+    width: 6rem;
+    height: 6rem;
+  }
 
-// .sub-menu li::after {
-//   content: "";
-//   position: absolute;
-//   left: 0;
-//   top: 15px;
-//   width: 10px;
-//   height: 1px;
-//   background-color: #ccc;
-// }
+  .content {
+    padding-left: 2rem;
+    padding-right: 1rem;
+  }
 
-// .sub-menu li:last-child::before {
-//   height: 50%;
-// }
+  .btn-container {
+    height: 3.5rem;
+    font-size: 1.2rem;
+  }
+
+  .main-menu-item .sub-menu a {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo .main {
+    width: 12rem;
+    height: 10rem;
+  }
+
+  .logo .sub {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .content {
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+  }
+
+  .btn-container {
+    height: 3rem;
+    font-size: 1rem;
+  }
+
+  .main-menu-item .sub-menu a {
+    font-size: 1rem;
+  }
+}

@@ -73,7 +73,13 @@ export class TodoService {
         })
       );
   }
-
+  deleteManyTasks(tasks: number[]) {
+    const body = { ids: tasks };
+    return this.httpClient.request('DELETE', `${this.baseUrl}/delete-many`, {
+      body: body,
+      headers: this.getAuthHeader(),
+    });
+  }
   addTask(Task: Note) {
     const body = {
       title: Task.title,

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MaterialssModule } from '../../../modules/material.module';
-import { MatMenuPanel } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { TodoService } from '../../../services/todo.service';
 import { Note } from '../../../models/note.model';
@@ -17,7 +16,7 @@ import { ModalService } from '../../../services/modal.service';
 export class TaskCardComponent implements OnInit {
   @Input() task!: Note;
   @Output() DeleteNote = new EventEmitter<number>();
-
+  isChecked = false;
   constructor(
     public todoService: TodoService,
     public todoStateService: TodoStateService,
@@ -32,6 +31,14 @@ export class TaskCardComponent implements OnInit {
     if (this.task.status == 'todo') return 0;
     else if (this.task.status == 'in-progress') return 50;
     return 100;
+  }
+
+  onCheckboxChange(check: boolean) {
+    if (check) {
+      this.todoStateService.selectTask(this.task.customId);
+    } else {
+      this.todoStateService.deselectTask(this.task.customId);
+    }
   }
 
   changeStatus(status: string) {
@@ -59,6 +66,7 @@ export class TaskCardComponent implements OnInit {
       },
     });
   }
+
   openTaskDetails(event: Event) {
     const clickedElement = event.target as HTMLElement;
 
