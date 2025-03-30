@@ -50,7 +50,10 @@
 
     <div class="item">
       <label><nz-icon nzType="calendar" nzTheme="outline" /> Date:</label>
-      <p>{{ taskDetailes?.createdAt | date : "MMMM d, y" }}</p>
+      <p>
+        {{ taskDetailes?.createdAt | date : "MMMM d, y" }} -
+        {{ taskDetailes?.dueDate | date : "MMMM d, y" }}
+      </p>
     </div>
 
     <div class="item">

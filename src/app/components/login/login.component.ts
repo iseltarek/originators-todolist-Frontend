@@ -34,7 +34,7 @@ export class LoginComponent {
     public authGuard: AuthGuard
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
@@ -42,7 +42,7 @@ export class LoginComponent {
   login() {
     this.authService
       .login(
-        this.loginForm.value.email as string,
+        this.loginForm.value.username as string,
         this.loginForm.value.password as string
       )
       .subscribe({

@@ -29,11 +29,11 @@ export class AuthService {
   isAuthenticatedUserSubject$ = this.isAuthenticatedUserSubject.asObservable();
   constructor(public httpClient: HttpClient, public router: Router) {}
 
-  public login(email: string, password: string): Observable<AuthResponse> {
+  public login(username: string, password: string): Observable<AuthResponse> {
     return this.httpClient
       .post<AuthResponse>(`${this.baseUrl}/login`, {
         password,
-        email,
+        username,
       })
       .pipe(
         tap((user) => {
@@ -53,7 +53,8 @@ export class AuthService {
   public signup(user: User): Observable<any> {
     return this.httpClient
       .post(`${this.baseUrl}/register`, {
-        name: user.name,
+        username: user.username,
+        fullName: user.fullName,
         password: user.password,
         email: user.email,
       })
@@ -76,7 +77,7 @@ export class AuthService {
   private setUserSession(user: AuthResponse): void {
     if (user) {
       const data = {
-        name: user.user.name,
+        name: user.user.username,
         email: user.user.email,
         token: user.verificationToken,
       };

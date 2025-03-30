@@ -27,16 +27,15 @@ export class BoardComponent implements OnInit {
     this.selectedTasksLength$ = this.selectedTasks$.pipe(
       map((tasks) => tasks.length)
     );
-    console.log(this.selectedTasksLength$);
   }
 
   deleteSelectedTasks() {
-    this.todoStateService.selectedTasks$.subscribe({
-      next: (tasks) => {
-        this.todoService.deleteManyTasks(tasks as number[]).subscribe({
-          next: () => this.todoStateService.deleteManyTasks(),
-        });
-      },
+    this.selectedTasks$.subscribe((tasks) => {
+      if (tasks.length === 0) return;
+
+      this.todoService.deleteManyTasks(tasks).subscribe({
+        next: () => this.todoStateService.deleteManyTasks(),
+      });
     });
   }
 

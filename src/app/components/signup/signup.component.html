@@ -30,8 +30,25 @@
             <input
               nz-input
               type="text"
-              formControlName="name"
+              formControlName="username"
               placeholder="User name"
+            />
+          </nz-input-group>
+          <mat-error>{{ getErrorMessage("name") }}</mat-error>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+
+    <nz-row nzGutter="16">
+      <nz-col nzSpan="24">
+        <nz-form-item class="item">
+          <mat-label class="label">Full Name</mat-label>
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              nz-input
+              type="text"
+              formControlName="fullName"
+              placeholder="Full name"
             />
           </nz-input-group>
           <mat-error>{{ getErrorMessage("name") }}</mat-error>

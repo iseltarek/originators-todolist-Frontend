@@ -41,30 +41,39 @@ export class TaskCardComponent implements OnInit {
     }
   }
 
-  changeStatus(status: string) {
-    this.task.status = status;
-    this.todoService.updateTask(this.task.customId, this.task).subscribe({
-      next: (resulteTask) => {
-        this.todoStateService.updateTask(resulteTask);
-      },
-    });
-  }
+  // changeStatus(status: string) {
+  //   this.task.status = status;
+  //   this.todoService.updateTask(this.task.customId, this.task).subscribe({
+  //     next: (resulteTask) => {
+  //       this.todoStateService.updateTask(resulteTask);
+  //     },
+  //   });
+  // }
 
   deleteTask() {
+    this.todoStateService.deleteTask(this.task.customId);
     this.todoService.deleteTask(this.task.customId).subscribe({
-      next: () => {
-        this.todoStateService.deleteTask(this.task.customId);
+      error: () => {
+        this.todoStateService.undoDeleteTask(this.task);
       },
     });
   }
 
+  // editTask() {
+  //   this.todoService.getTaskById(this.task.customId).subscribe({
+  //     next: (resulteTask) => {
+  //       this.modalService.openModal(true);
+  //       this.todoStateService.updateTask(resulteTask);
+  //     },
+  //   });
+  // }
   editTask() {
-    this.todoService.getTaskById(this.task.customId).subscribe({
-      next: (resulteTask) => {
-        this.modalService.openModal(true);
-        this.todoStateService.updateTask(resulteTask);
-      },
-    });
+    // this.todoService.getTaskById(this.task.customId).subscribe({
+    //   next: (resulteTask) => {
+    this.modalService.openModal(true);
+    this.todoStateService.setTaskToEdit(this.task);
+    //   },
+    // });
   }
 
   openTaskDetails(event: Event) {

@@ -1,9 +1,10 @@
 <div class="grid-container">
   <ul class="tasks-grid">
-    <li class="task-item" *ngFor="let task of tasks">
-      <app-task-card
-        [task]="task"
-      />
+    <li
+      class="task-item"
+      *ngFor="let task of tasks(); trackBy: trackByCustomId"
+    >
+      <app-task-card [task]="task" />
     </li>
   </ul>
 </div>

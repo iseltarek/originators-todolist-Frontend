@@ -73,19 +73,26 @@ export class TodoService {
         })
       );
   }
+
   deleteManyTasks(tasks: number[]) {
-    const body = { ids: tasks };
+    console.log(tasks);
+
+    const body = {
+      todos: tasks.map((id) => ({ id })),
+    };
     return this.httpClient.request('DELETE', `${this.baseUrl}/delete-many`, {
       body: body,
       headers: this.getAuthHeader(),
     });
   }
+
   addTask(Task: Note) {
     const body = {
       title: Task.title,
       status: Task.status,
       description: Task.description,
       tags: Task.tags,
+      dueDate: Task.dueDate,
     };
     return this.httpClient
       .post<Note>(`${this.baseUrl}/`, body, {
@@ -100,6 +107,7 @@ export class TodoService {
         })
       );
   }
+
   getAuthHeader(): HttpHeaders {
     const token = localStorage.getItem(this.TOKEN_KEY);
     return new HttpHeaders({

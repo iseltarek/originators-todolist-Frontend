@@ -34,6 +34,7 @@ import { ModalService } from '../../../services/modal.service';
 })
 export class CreateTaskComponent implements OnInit {
   @Output() closeEvent = new EventEmitter<void>();
+  submitting = signal(false);
   isVisible = false;
   isEditing = false;
   errorMessage = '';
@@ -49,15 +50,14 @@ export class CreateTaskComponent implements OnInit {
     this.taskForm = new FormGroup({
       title: new FormControl<string>('', [Validators.required]),
       description: new FormControl<string>(''),
-      date: new FormControl<Date | null>(null),
-      status: new FormControl<string>('', [Validators.required]),
+      date: new FormControl<Date | null>(null, [Validators.required]),
+      status: new FormControl<string>(''),
     });
   }
 
   ngOnInit(): void {
-    this.todoStateService.taskToUpdate$.subscribe({
-      next: (taskToUpdate) => this.editTask(taskToUpdate as Note),
-    });
+    const taskToEdit = this.todoStateService.taskToEdit();
+    if (taskToEdit) this.editTask(taskToEdit);
 
     this.modalService.isModalVisible$.subscribe((visible) => {
       this.isVisible = visible;
@@ -67,24 +67,39 @@ export class CreateTaskComponent implements OnInit {
       this.isEditing = editing;
     });
   }
-  changeStatus(status: string) {
-    this.taskForm.controls['status'].setValue(status);
-  }
-  createTask() {
-    const task: Note = this.buildTaskObject();
+  createTask(): void {
+    const taskData: Note = this.buildTaskObject();
     if (!this.taskForm.valid) {
       this.errorMessage = this.getErrorMessage();
       return;
     }
-
-    const saveOperation = this.isEditing
-      ? this.todoService.updateTask(this.updatedTaskId as number, task)
-      : this.todoService.addTask(task);
-
-    saveOperation.subscribe({
-      next: (savedTask) => this.handleSuccess(savedTask),
-      error: (err) => (this.errorMessage = err.error.message),
-    });
+    this.submitting.set(true);
+    if (this.isEditing) {
+      this.todoService
+        .updateTask(this.updatedTaskId as number, taskData)
+        .subscribe({
+          next: (updatedTask) => {
+            this.resetTask();
+            this.todoStateService.updateTaskInList(updatedTask);
+            this.todoStateService.setTaskToEdit(null);
+          },
+          error: (err) => (this.errorMessage = err.error.message),
+        });
+    } else {
+      this.todoService.addTask(taskData).subscribe({
+        next: (addedTask) => {
+          this.resetTask();
+          this.todoStateService.addTask(addedTask);
+        },
+        error: (err) => (this.errorMessage = err.error.message),
+      });
+    }
+  }
+  resetTask(): void {
+    this.closeEvent.emit();
+    this.isEditing = false;
+    this.updatedTaskId = null;
+    this.taskForm.reset();
   }
 
   private buildTaskObject(): Note {
@@ -92,9 +107,9 @@ export class CreateTaskComponent implements OnInit {
       title: this.taskForm.value.title || '',
       description: this.taskForm.value.description || '',
       status: this.taskForm.value.status || 'todo',
-      createdAt: this.taskForm.value.date || new Date(),
+      createdAt: this.taskForm.value.date?.[0] ?? new Date(),
       updatedAt: this.isEditing ? new Date() : null,
-      dueDate: null,
+      dueDate: this.taskForm.value.date?.[1] ?? null,
       tags: [...this.tags],
       customId: this.isEditing ? this.updatedTaskId! : 0,
     };
@@ -102,26 +117,12 @@ export class CreateTaskComponent implements OnInit {
   handleCancel() {
     this.modalService.closeModal();
     this.modalService.resetSelectedTask();
-    this.todoStateService.setTask(null);
-    this.todoStateService.taskToUpdate.next(null);
-
+    if (this.isEditing) this.todoStateService.setTaskToEdit(null);
     this.taskForm.reset();
     this.tags = [];
     this.isEditing = false;
     this.updatedTaskId = null;
     this.errorMessage = '';
-  }
-  private handleSuccess(savedTask: Note): void {
-    this.closeEvent.emit();
-    if (this.isEditing) {
-      this.todoStateService.updateTask(savedTask);
-      this.todoStateService.taskToUpdate.next(null);
-    } else {
-      this.todoStateService.setTask(savedTask);
-    }
-    this.isEditing = false;
-    this.updatedTaskId = null;
-    this.taskForm.reset();
   }
 
   updateTags(tags: string[] | Event) {
@@ -135,6 +136,10 @@ export class CreateTaskComponent implements OnInit {
         title: taskToUpdate.title,
         description: taskToUpdate.description,
         status: taskToUpdate.status,
+        date:
+          taskToUpdate.createdAt && taskToUpdate.dueDate
+            ? [new Date(taskToUpdate.createdAt), new Date(taskToUpdate.dueDate)]
+            : null,
       });
       this.updateTags(taskToUpdate.tags as string[]);
       this.isEditing = true;

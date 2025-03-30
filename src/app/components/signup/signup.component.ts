@@ -36,7 +36,8 @@ export class SignupComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
-      name: ['', [Validators.required]],
+      username: ['', [Validators.required]],
+      fullName: ['', [Validators.required]],
     });
   }
 
@@ -50,7 +51,8 @@ export class SignupComponent {
     const userform: User = {
       email: this.signUpForm.value.email,
       password: this.signUpForm.value.password,
-      name: this.signUpForm.value.name,
+      username: this.signUpForm.value.username,
+      fullName: this.signUpForm.value.fullName,
     };
     this.authService.signup(userform).subscribe({
       next: () => this.router.navigate(['/landingpage/login']),
