@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, effect, OnInit } from '@angular/core';
 import { AntdModule } from '../../../modules/antd.module';
 import { AlltasksComponent } from '../../../components/tasks-container/alltasks.component';
 import { ModalService } from '../../../services/modal.service';
 import { CommonModule } from '@angular/common';
 import { TodoService } from '../../../services/todo.service';
 import { TodoStateService } from '../../../services/todo.state.service';
-import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-board',
@@ -13,29 +12,22 @@ import { map, Observable } from 'rxjs';
   templateUrl: './board.component.html',
   styleUrl: './board.component.less',
 })
-export class BoardComponent implements OnInit {
-  selectedTasks$!: Observable<number[]>;
-  selectedTasksLength$!: Observable<number>;
+export class BoardComponent {
+  selectedTasksIds: number[] = [];
   constructor(
     public modalService: ModalService,
     public todoService: TodoService,
     public todoStateService: TodoStateService
-  ) {}
-
-  ngOnInit() {
-    this.selectedTasks$ = this.todoStateService.selectedTasks$;
-    this.selectedTasksLength$ = this.selectedTasks$.pipe(
-      map((tasks) => tasks.length)
-    );
+  ) {
+    effect(() => {
+      this.selectedTasksIds = this.todoStateService.tasksSelected();
+    });
   }
-
   deleteSelectedTasks() {
-    this.selectedTasks$.subscribe((tasks) => {
-      if (tasks.length === 0) return;
+    if (this.selectedTasksIds.length === 0) return;
 
-      this.todoService.deleteManyTasks(tasks).subscribe({
-        next: () => this.todoStateService.deleteManyTasks(),
-      });
+    this.todoService.deleteManyTasks(this.selectedTasksIds).subscribe({
+      next: () => this.todoStateService.deleteManyTasks(),
     });
   }
 

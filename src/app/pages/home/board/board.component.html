@@ -4,11 +4,11 @@
     <div class="task-header">
       <div class="selected">
         <span>Recent Trackers</span>
-        <span>Trackers selected ({{ selectedTasksLength$ | async }})</span>
+        <span>Trackers selected ({{ selectedTasksIds.length }})</span>
         <button
           nz-button
           class="delete-btn"
-          *ngIf="(selectedTasksLength$ | async) !== 0"
+          *ngIf="selectedTasksIds.length > 0"
           (click)="deleteSelectedTasks()"
         >
           <nz-icon nzType="delete"> </nz-icon>

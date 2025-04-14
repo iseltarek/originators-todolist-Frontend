@@ -75,8 +75,6 @@ export class TodoService {
   }
 
   deleteManyTasks(tasks: number[]) {
-    console.log(tasks);
-
     const body = {
       todos: tasks.map((id) => ({ id })),
     };

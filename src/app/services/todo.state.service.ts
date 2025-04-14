@@ -7,52 +7,6 @@ import { TodoService } from './todo.service';
   providedIn: 'root',
 })
 export class TodoStateService {
-  private taskDeleted = new BehaviorSubject<number | null>(null);
-  taskDeleted$ = this.taskDeleted.asObservable();
-
-  // private taskAdded = new BehaviorSubject<Note | null>(null);
-  // taskAdded$ = this.taskAdded.asObservable();
-
-  // taskToUpdate = new BehaviorSubject<Note | null>(null);
-  // taskToUpdate$ = this.taskToUpdate.asObservable();
-
-  private selectedTasks = new BehaviorSubject<number[]>([]);
-  selectedTasks$ = this.selectedTasks.asObservable();
-
-  // setTask(task: Note | null) {
-  //   this.taskAdded.next(task);
-  // }
-
-  // deleteTask(taskId: number | null) {
-  //   this.taskDeleted.next(taskId);
-  // }
-
-  // updateTask(task: Note | null) {
-  //   this.taskToUpdate.next(task);
-  // }
-
-  selectTask(taskId: number): void {
-    const currentTasks = this.selectedTasks.value;
-    if (!currentTasks.includes(taskId))
-      this.selectedTasks.next([...currentTasks, taskId]);
-  }
-
-  deselectTask(taskId: number): void {
-    const updatedTasks = this.selectedTasks.value.filter((id) => id !== taskId);
-    this.selectedTasks.next(updatedTasks);
-  }
-
-  deleteManyTasks() {
-    const selectedIds = this.selectedTasks.value;
-    if (selectedIds.length === 0) return;
-
-    selectedIds.forEach((taskId) => {
-      this.taskDeleted.next(taskId);
-    });
-
-    this.selectedTasks.next([]);
-  }
-
   private _allTasks = signal<Note[]>([]);
   allTasks = this._allTasks.asReadonly();
 
@@ -61,6 +15,9 @@ export class TodoStateService {
 
   private _taskToEdit = signal<Note | null>(null);
   taskToEdit = this._taskToEdit.asReadonly();
+
+  private _tasksSelected = signal<number[]>([]);
+  tasksSelected = this._tasksSelected.asReadonly();
 
   constructor(public todoService: TodoService) {}
 
@@ -105,7 +62,28 @@ export class TodoStateService {
     );
   }
 
+  selectTask(taskId: number): void {
+    const currentTasks = this._tasksSelected();
+    if (!currentTasks.includes(taskId))
+      this._tasksSelected.update((tasksIds) => [...tasksIds, taskId]);
+  }
+
+  deselectTask(taskId: number): void {
+    this._tasksSelected.update((tasks) => tasks.filter((id) => id !== taskId));
+  }
+
+  deleteManyTasks() {
+    const selectedIds = this._tasksSelected();
+    if (selectedIds.length === 0) return;
+    selectedIds.forEach((taskId) => {
+      this.deleteTask(taskId);
+    });
+    this._taskToEdit.set(null);
+  }
+
   resetTasks() {
     this._allTasks.set([]);
+    this._tasksSelected.set([]);
+    this._deletedTasks.set([]);
   }
 }

@@ -1,13 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  input,
-  OnInit,
-  Output,
-  signal,
-} from '@angular/core';
-import { MaterialssModule } from '../../../modules/material.module';
+import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -23,12 +14,7 @@ import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-create-task',
-  imports: [
-    MaterialssModule,
-    ReactiveFormsModule,
-    TaskTagsComponent,
-    AntdModule,
-  ],
+  imports: [ReactiveFormsModule, TaskTagsComponent, AntdModule],
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.less',
 })
@@ -57,7 +43,7 @@ export class CreateTaskComponent implements OnInit {
 
   ngOnInit(): void {
     const taskToEdit = this.todoStateService.taskToEdit();
-    if (taskToEdit) this.editTask(taskToEdit);
+    if (taskToEdit) this.prepareEditForm(taskToEdit);
 
     this.modalService.isModalVisible$.subscribe((visible) => {
       this.isVisible = visible;
@@ -67,6 +53,7 @@ export class CreateTaskComponent implements OnInit {
       this.isEditing = editing;
     });
   }
+
   createTask(): void {
     const taskData: Note = this.buildTaskObject();
     if (!this.taskForm.valid) {
@@ -95,7 +82,8 @@ export class CreateTaskComponent implements OnInit {
       });
     }
   }
-  resetTask(): void {
+
+  private resetTask(): void {
     this.closeEvent.emit();
     this.isEditing = false;
     this.updatedTaskId = null;
@@ -114,7 +102,8 @@ export class CreateTaskComponent implements OnInit {
       customId: this.isEditing ? this.updatedTaskId! : 0,
     };
   }
-  handleCancel() {
+
+  handleCancel(): void {
     this.modalService.closeModal();
     this.modalService.resetSelectedTask();
     if (this.isEditing) this.todoStateService.setTaskToEdit(null);
@@ -130,7 +119,7 @@ export class CreateTaskComponent implements OnInit {
     this.tags = [...tags];
   }
 
-  editTask(taskToUpdate: Note) {
+  prepareEditForm(taskToUpdate: Note) {
     if (taskToUpdate) {
       this.taskForm.patchValue({
         title: taskToUpdate.title,

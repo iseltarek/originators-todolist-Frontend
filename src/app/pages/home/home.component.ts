@@ -1,21 +1,9 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  OnInit,
-  Output,
-  output,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { CommonModule, DatePipe } from '@angular/common';
 import { CreateTaskComponent } from '../../components/tasks-container/create-task/create-task.component';
 import { ModalService } from '../../services/modal.service';
-import { MaterialssModule } from '../../modules/material.module';
-import { AlltasksComponent } from '../../components/tasks-container/alltasks.component';
 import { AntdModule } from '../../modules/antd.module';
-import { TodoStateService } from '../../services/todo.state.service';
 import { Subscription } from 'rxjs';
 import { Note } from '../../models/note.model';
 import { TaskDetailsComponent } from '../../components/tasks-container/task-details/task-details.component';

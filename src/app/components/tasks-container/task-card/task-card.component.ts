@@ -59,21 +59,9 @@ export class TaskCardComponent implements OnInit {
     });
   }
 
-  // editTask() {
-  //   this.todoService.getTaskById(this.task.customId).subscribe({
-  //     next: (resulteTask) => {
-  //       this.modalService.openModal(true);
-  //       this.todoStateService.updateTask(resulteTask);
-  //     },
-  //   });
-  // }
   editTask() {
-    // this.todoService.getTaskById(this.task.customId).subscribe({
-    //   next: (resulteTask) => {
     this.modalService.openModal(true);
     this.todoStateService.setTaskToEdit(this.task);
-    //   },
-    // });
   }
 
   openTaskDetails(event: Event) {
